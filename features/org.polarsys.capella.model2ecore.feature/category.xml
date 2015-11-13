@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.polarsys.capella.model2ecore.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.model2ecore.feature" version="1.0.0.qualifier">
+      <category name="capellaTools"/>
+   </feature>
+   <category-def name="capellaTools" label="Capella Tools"/>
+</site>
