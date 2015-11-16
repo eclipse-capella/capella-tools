@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2015 THALES GLOBAL SERVICES.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+       Joao Barata - initial API and implementation
+-->
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.polarsys.capella.tools.group</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>../../features/org.polarsys.capella.model2ecore.feature</module>
+		<module>../../features/org.polarsys.capella.model2ecore.source.feature</module>
+		<module>../../plugins/org.polarsys.capella.model2ecore</module>
+		<module>../../releng/org.polarsys.capella.tools.p2updatesite</module>
+	</modules>
+	<properties>
+		<tycho.version>0.21.0</tycho.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<luna-repo.url>http://download.eclipse.org/releases/luna</luna-repo.url>
+		<capella-repo.url>https://hudson.polarsys.org/capella/job/capella-master/lastSuccessfulBuild/artifact/result/publish/org.polarsys.capella/site.p2</capella-repo.url>
+		<kitalpha-repo.url>https://hudson.polarsys.org/kitalpha/job/Kitalpha_CTK/lastSuccessfulBuild/artifact/result/publish/kitalpha_ctk/site.p2</kitalpha-repo.url>
+		<amalgam-repo.url>http://download.eclipse.org/modeling/amalgam/updates/nightly/1.7.x/mars</amalgam-repo.url>
+		<sirius-repo.url>http://download.eclipse.org/sirius/updates/releases/3.1.x/juno</sirius-repo.url>
+		<query-legacy-repo.url>http://download.eclipse.org/sirius/updates/legacy/1.1.0</query-legacy-repo.url>
+	</properties>
+	<repositories>
+		<repository>
+			<id>luna</id>
+			<url>${luna-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>capella</id>
+			<url>${capella-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>kitalpha</id>
+			<url>${kitalpha-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>amalgam</id>
+			<url>${amalgam-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>sirius</id>
+			<url>${sirius-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>query-legacy</id>
+			<url>${query-legacy-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			<!-- enable source bundle generation -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

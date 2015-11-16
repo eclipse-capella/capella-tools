@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2015 THALES GLOBAL SERVICES.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+       Joao Barata - initial API and implementation
+-->
+<site>
+   <feature url="features/org.polarsys.capella.model2ecore.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.model2ecore.feature" version="1.0.0.qualifier">
+      <category name="org.polarsys.capella.tools.category"/>
+   </feature>
+   <feature url="features/org.polarsys.capella.model2ecore.source.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.model2ecore.source.feature" version="1.0.0.qualifier">
+      <category name="org.polarsys.capella.tools.category"/>
+   </feature>
+   <category-def name="org.polarsys.capella.tools.category" label="Capella Tools"/>
+</site>
