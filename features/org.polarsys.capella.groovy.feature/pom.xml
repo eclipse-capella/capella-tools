@@ -19,12 +19,6 @@
     <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>org.polarsys.capella.tools.p2updatesite</artifactId>
-  <packaging>eclipse-repository</packaging>
-
-  <!-- customizations -->
-  <!--version>1.0.0.${unqualifiedVersion}</version-->
-  <build>
-    <finalName>org.polarsys.capella.tools-${project.version}</finalName>
-  </build>
+  <artifactId>org.polarsys.capella.groovy.feature</artifactId>
+  <packaging>eclipse-feature</packaging>
 </project> 

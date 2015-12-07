@@ -43,7 +43,6 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
     importCustomizer = initializeImportCustomizer();
   }
 
-  @Override
   public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
       throws CoreException {
 
@@ -55,13 +54,14 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
         String[] args = configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), "")
             .split("\\s+");
         IFile capellaScriptFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(location));
-        try (final Reader reader = new BufferedReader(new InputStreamReader(capellaScriptFile.getContents()))) {
+        try {
+          final Reader reader = new BufferedReader(new InputStreamReader(capellaScriptFile.getContents()));
           CompilerConfiguration c = new CompilerConfiguration();
           c.setScriptBaseClass("org.polarsys.capella.groovy.CapellaScriptBase");
           c.addCompilationCustomizers(importCustomizer);
           final GroovyShell shell = new GroovyShell(getClass().getClassLoader(), new Binding(args), c);
           shell.evaluate(reader);
-        } catch (IOException e) {
+        } catch (CoreException e) {
           throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
         }
         return Status.OK_STATUS;
