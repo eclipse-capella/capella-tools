@@ -16,8 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.sirius.ui;resolution:=optional,
  org.codehaus.groovy;bundle-version="2.3.7",
  org.eclipse.debug.core,
- org.eclipse.emf.codegen.ecore,
- org.polarsys.capella.groovy.emf;bundle-version="1.0.0"
+ org.eclipse.emf.codegen.ecore
 Eclipse-BuddyPolicy: global
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
