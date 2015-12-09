@@ -10,21 +10,160 @@
        Joao Barata - initial API and implementation
 -->
 <project>
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <relativePath>../../releng/org.polarsys.capella.tools.tycho/pom.xml</relativePath>
-    <groupId>org.polarsys.capella.tools.group</groupId>
-    <artifactId>parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-  </parent>
+	<parent>
+		<relativePath>../../releng/org.polarsys.capella.tools.tycho/pom.xml</relativePath>
+		<groupId>org.polarsys.capella.tools.group</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 
-  <artifactId>org.polarsys.capella.tools.p2updatesite</artifactId>
-  <packaging>eclipse-repository</packaging>
+	<artifactId>org.polarsys.capella.tools.p2updatesite</artifactId>
+	<packaging>eclipse-repository</packaging>
 
-  <!-- customizations -->
-  <!--version>1.0.0.${unqualifiedVersion}</version-->
-  <build>
-    <finalName>org.polarsys.capella.tools-${project.version}</finalName>
-  </build>
+	<!-- customizations -->
+	<!--version>1.0.0.${unqualifiedVersion}</version-->
+	<build>
+		<finalName>org.polarsys.capella.tools-updatesite-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>mirror-groovy</id>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>${project.build.directory}/repository</url>
+								</repository>
+							</source>
+							<ius>
+								<iu>
+									<id>org.polarsys.capella.groovy.feature.feature.group</id>
+								</iu>
+								<iu>
+									<id>org.polarsys.capella.groovy.source.feature.feature.group</id>
+								</iu>
+							</ius>
+							<destination>${project.build.directory}/repository-mirror-groovy</destination>
+						</configuration>
+					</execution>
+					<execution>
+						<id>mirror-model2ecore</id>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>${project.build.directory}/repository</url>
+								</repository>
+							</source>
+							<ius>
+								<iu>
+									<id>org.polarsys.capella.model2ecore.feature.feature.group</id>
+								</iu>
+								<iu>
+									<id>org.polarsys.capella.model2ecore.source.feature.feature.group</id>
+								</iu>
+							</ius>
+							<destination>${project.build.directory}/repository-mirror-model2ecore</destination>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-eclipserun-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<repositories>
+						<repository>
+							<id>luna</id>
+							<layout>p2</layout>
+							<url>${luna-repo.url}</url>
+						</repository>
+					</repositories>
+					<dependencies>
+						<dependency>
+							<artifactId>org.eclipse.equinox.p2.repository.tools</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.equinox.p2.core.feature</artifactId>
+							<type>eclipse-feature</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.equinox.p2.extras.feature</artifactId>
+							<type>eclipse-feature</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.eclipse.equinox.ds</artifactId>
+							<type>eclipse-plugin</type>
+						</dependency>
+					</dependencies>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-groovy-dropins</id>
+						<configuration>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-groovy -destination ${project.build.directory}/dropins-groovy</appArgLine>
+						</configuration>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+					<execution>
+						<id>create-model2ecore-dropins</id>
+						<configuration>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-model2ecore -destination ${project.build.directory}/dropins-model2ecore</appArgLine>
+						</configuration>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>package-dropins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>                       
+							<target>
+								<delete file="${project.build.directory}/dropins-groovy/artifacts.jar"/>
+								<delete file="${project.build.directory}/dropins-groovy/content.jar"/>
+								<delete file="${project.build.directory}/dropins-model2ecore/artifacts.jar"/>
+								<delete file="${project.build.directory}/dropins-model2ecore/content.jar"/>
+								<delete includeemptydirs="true">
+									<fileset dir="${project.build.directory}/dropins-groovy/features" includes="**/META-INF/**"/>
+									<fileset dir="${project.build.directory}/dropins-model2ecore/features" includes="**/META-INF/**"/>
+								</delete>
+								<zip basedir="${project.build.directory}/dropins-groovy"
+									destfile="${project.build.directory}/org.polarsys.capella.groovy-dropins-${project.version}.zip"/>
+								<zip basedir="${project.build.directory}/dropins-model2ecore"
+									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${project.version}.zip"/>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project> 
