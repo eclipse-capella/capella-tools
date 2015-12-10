@@ -6,7 +6,7 @@
       provider-name="%providerName">
 
    <description>
-      %featureName
+      %description
    </description>
 
    <copyright>
@@ -16,6 +16,10 @@
    <license url="%licenseURL">
       %license
    </license>
+
+   <includes
+         id="org.codehaus.groovy23.feature"
+         version="0.0.0"/>
 
    <plugin
          id="org.polarsys.capella.groovy"
