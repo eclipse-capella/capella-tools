@@ -34,7 +34,7 @@
 		<amalgam-repo.url>http://download.eclipse.org/modeling/amalgam/updates/nightly/1.7.x/mars</amalgam-repo.url>
 		<sirius-repo.url>http://download.eclipse.org/sirius/updates/releases/3.1.x/juno</sirius-repo.url>
 		<query-legacy-repo.url>http://download.eclipse.org/sirius/updates/legacy/1.1.0</query-legacy-repo.url>
-		<groovy-eclipse.url>http://dist.springsource.org/release/GRECLIPSE/e4.4</groovy-eclipse.url>
+		<groovy-eclipse.url>http://dist.springsource.org/release/GRECLIPSE/e4.2</groovy-eclipse.url>
 	</properties>
 	<repositories>
 		<repository>
