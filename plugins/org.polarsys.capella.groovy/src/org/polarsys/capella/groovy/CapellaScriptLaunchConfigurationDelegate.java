@@ -31,6 +31,7 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.polarsys.capella.core.model.helpers.registry.CapellaPackageRegistry;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
