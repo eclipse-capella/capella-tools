@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,10 +10,10 @@
  *******************************************************************************/
 
 // We can send messages to the information view with the log function:
-log "Hello capella from Groovy!"
+info "Hello capella from Groovy!"
 
 // Command line arguments can be accessed like this:
-log args[0]
+info args[0]
 
 
 /*
@@ -26,60 +26,61 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
    * All logical functions. 
    */
   LogicalFunction.each {
-    log it
+    info it
   }
 
   /* 
    * All physical functions 
    */
   PhysicalFunction.each {
-    log it
+    info it
   }
 
   /**
    * Or just name/id pairs:
    */
   Actor.each {
-    log "$it.name $it.id"
+    info "$it.name $it.id"
   }
 
   /*
    * Or enumerate them:
    */
   Capability.eachWithIndex { capability, index ->
-    log "$index $capability.name"
+    info "$index $capability.name"
   }
 
   /*
    * Or check if a predicate holds for all LF 
    */
   if (LogicalFunction.every { it.name != "Root Logical Function" }){
-    log "All functions are root functions, ouch!"
+    warn "All functions are root functions, ouch!"
   }
 
   /*
    * Or check if a predicate holds for any LF
    */
   if (LogicalFunction.any { it.name == "Root Logical Function"}) {
-    log "There's a root function."
+    info "There's a root function."
   }
 
   /*
    * Or search functions with regular expressions on their names:
    */
   LogicalFunction.grep ({ it.name =~ /Ground/ }).each {
-    log it
+    info it
   }
 
   /*
    * Get the first match
    */
-  log LogicalFunction.find ({ it.name =~ /Ground/ })
+  info LogicalFunction.find ({ it.name =~ /Ground/ })
 
 
   /* 
    * We can also write to the model. Let's capitalize all Function names that
-   * have something to do with a Root
+   * have something to do with a Root. Note that after the script completes, you
+   * can actually 'undo' changes made by the script. Nice!
    */
   AbstractFunction.grep ({it.name =~ /Root/ }).each {
     it.name = it.name.toUpperCase()
@@ -93,14 +94,16 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
    * Log the diagram names
    */
   diagrams().each {
-    log it.name
+    info it.name
   }
 
   /*
-   * We can also export diagrams as images
+   * We can also export diagrams as images. Here we export only the architecture
+   * diagrams.
    */
-  diagrams().eachWithIndex { diagram, index ->
-    diagram.export("In-Flight Entertainment System/diagram${index}.jpg")
-  }
+  diagrams().grep ({it.description.titleExpression =~ "Architecture"})
+            .each {
+                it.export("In-Flight Entertainment System/${it.name}.jpg")
+            }
 
 }
