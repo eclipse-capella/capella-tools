@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.transaction.TransactionalEditingDomain
 import org.polarsys.capella.core.data.la.LogicalFunction
-
+import org.polarsys.capella.core.model.helpers.registry.CapellaPackageRegistry
 import com.google.common.collect.Lists
 import com.google.common.collect.Iterators
 
