@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,30 +10,26 @@
  *******************************************************************************/
 package org.polarsys.capella.groovy;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class CapellaGroovyPlugin implements BundleActivator {
+public class CapellaGroovyPlugin extends Plugin {
 
   public static final String PLUGIN_ID = "org.polarsys.capella.groovy";
 
-  private static BundleContext context;
+  private static CapellaGroovyPlugin instance;
 
-  static BundleContext getContext() {
-    return context;
+  public static CapellaGroovyPlugin getInstance(){
+    return instance;
   }
 
-  /**
-   * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-   */
   public void start(BundleContext bundleContext) throws Exception {
-    CapellaGroovyPlugin.context = bundleContext;
+    super.start(bundleContext);
+    instance = this;
   }
 
-  /**
-   * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-   */
   public void stop(BundleContext bundleContext) throws Exception {
-    CapellaGroovyPlugin.context = null;
+    instance = null;
+    super.stop(bundleContext);
   }
 }

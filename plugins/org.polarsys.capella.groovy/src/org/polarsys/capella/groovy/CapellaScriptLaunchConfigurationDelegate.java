@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,9 +11,13 @@
 package org.polarsys.capella.groovy;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
@@ -31,6 +35,9 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.polarsys.capella.core.model.helpers.registry.CapellaPackageRegistry;
 
 import groovy.lang.Binding;
@@ -55,12 +62,36 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
         String[] args = configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), "")
             .split("\\s+");
         IFile capellaScriptFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(location));
+
+        Collection<URL> urls = new ArrayList<URL>();
+
+        if (capellaScriptFile.getProject().hasNature(JavaCore.NATURE_ID)){
+          IJavaProject project = JavaCore.create(capellaScriptFile.getProject());
+
+          for (IClasspathEntry entry : project.getRawClasspath()){
+            if (entry.getEntryKind() == IClasspathEntry.CPE_LIBRARY){
+              try {
+                urls.add(ResourcesPlugin.getWorkspace().getRoot().getFile(entry.getPath()).getLocationURI().toURL());
+              } catch (MalformedURLException e) {
+                CapellaGroovyPlugin.getInstance().getLog().log(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
+              }
+            }
+          }
+        }
+
         try {
           final Reader reader = new BufferedReader(new InputStreamReader(capellaScriptFile.getContents()));
           CompilerConfiguration c = new CompilerConfiguration();
           c.setScriptBaseClass("org.polarsys.capella.groovy.CapellaScriptBase");
           c.addCompilationCustomizers(importCustomizer);
-          final GroovyShell shell = new GroovyShell(getClass().getClassLoader(), new Binding(args), c);
+
+          ClassLoader loader = getClass().getClassLoader();
+
+          if (urls.size() > 0){
+            loader = new URLClassLoader(urls.toArray(new URL[urls.size()]), loader);        
+          }
+
+          final GroovyShell shell = new GroovyShell(loader, new Binding(args), c);
           shell.evaluate(reader);
         } catch (CoreException e) {
           throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
