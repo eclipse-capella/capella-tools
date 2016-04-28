@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
+/**
+ * Copyright (c) 2005, 2010 IBM Corporation and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   IBM - Initial API and implementation
+ *   Kenn Hussey - 332962
+ *   Thales - Capella adaptation
+ */
+-->
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="org.polarsys.capella.views.category"
+            class="org.polarsys.capella.ocl.requester.view.OCLInterpreterView"
+            icon="$nl$/icons/elcl16/oclqryedit_co.gif"
+            id="org.polarsys.capella.ocl.requester.view.OCLInterpreterID"
+            name="OCL Requester">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Show in OCL Interpreter"
+            id="org.eclipse.ocl.examples.interpreter"
+            name="Show in OCL Requester">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.polarsys.capella.ocl.requester.command.ShowOCLRequestorCommand"
+            commandId="org.eclipse.ocl.examples.interpreter">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=navigateGroup">
+         <command
+               commandId="org.eclipse.ocl.examples.interpreter"
+               icon="$nl$/icons/elcl16/oclqryedit_co.gif"
+               id="org.polarsys.capella.core.ui.semantic.browser.sirius.semanticBrowserSetSelection"
+               label="Show in OCL Requester"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <reference
+                     definitionId="org.polarsys.capella.core.ui.semantic.browser.sirius.selectInSemanticBrowserSelectionDefinition">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.show">
+         <command
+               commandId="org.eclipse.ocl.examples.interpreter"
+               icon="$nl$/icons/elcl16/oclqryedit_co.gif"
+               id="org.polarsys.capella.core.ui.semantic.browser.sirius.semanticBrowserSetSelection2"
+               label="Show in OCL Requester"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <reference
+                     definitionId="org.polarsys.capella.core.ui.semantic.browser.sirius.selectInSemanticBrowserSelectionDefinition">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.polarsys.capella.core.ui.semantic.browser.view.SemanticBrowserID?after=additions">
+         <command
+               commandId="org.eclipse.ocl.examples.interpreter"
+               icon="$nl$/icons/elcl16/oclqryedit_co.gif"
+               id="org.polarsys.capella.core.ui.semantic.browser.sirius.semanticBrowserSetSelection3"
+               label="Show in OCL Requester"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <reference
+                     definitionId="org.polarsys.capella.core.ui.semantic.browser.sirius.selectInSemanticBrowserSelectionDefinition">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.polarsys.capella.core.ui.semantic.browser.sirius.selectInSemanticBrowserSelectionDefinition">
+         <with
+               variable="activeMenuSelection">
+            <and>
+               <iterate>
+                  <or>
+                     <instanceof
+                           value="org.polarsys.kitalpha.emde.model.Element">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+                     </instanceof>
+                  </or>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </and>
+         </with>
+      </definition>
+      <definition
+            id="org.polarsys.capella.core.ui.semantic.browser.sirius.selectInCapellaExplorerDefinition">
+         <with
+               variable="activeMenuSelection">
+            <and>
+               <iterate>
+                  <or>
+                     <instanceof
+                           value="org.polarsys.kitalpha.emde.model.Element">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+                     </instanceof>
+                  </or>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </and>
+         </with>
+      </definition>
+      <definition
+            id="org.polarsys.capella.core.ui.semantic.browser.sirius.openRepresentationDefinition">
+         <with
+               variable="activeMenuSelection">
+            <and>
+               <iterate>
+                  <instanceof
+                        value="org.eclipse.sirius.viewpoint.DRepresentation">
+                  </instanceof>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </and>
+         </with>
+      </definition>
+   </extension>
+</plugin>

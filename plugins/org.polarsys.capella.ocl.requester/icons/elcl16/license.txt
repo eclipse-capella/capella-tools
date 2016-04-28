@@ -1,0 +1,12 @@
+These followings icons are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+<icon file path> - <original eclipse plug-in> - <original file path>
+
+/icons/elcl16/oclconsole_co.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/oclconsole_co.gif
+/icons/elcl16/oclexport.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/oclexport.gif
+/icons/elcl16/oclimport.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/oclimport.gif
+/icons/elcl16/oclqryedit_co.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/oclqryedit_co.gif
+/icons/elcl16/save.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/save.gif
+/icons/elcl16/start_task.gif - org.eclipse.ocl.examples.interpreter - org.eclipse.ocl.examples.interpreter/icons/elcl16/start_task.gif
