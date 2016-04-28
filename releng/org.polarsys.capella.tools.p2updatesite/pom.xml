@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2015 THALES GLOBAL SERVICES.
+  Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -78,6 +78,29 @@
 							<destination>${project.build.directory}/repository-mirror-model2ecore</destination>
 						</configuration>
 					</execution>
+					<execution>
+						<id>mirror-ocl-requester</id>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>${project.build.directory}/repository</url>
+								</repository>
+							</source>
+							<ius>
+								<iu>
+									<id>org.polarsys.capella.ocl.requester.feature.feature.group</id>
+								</iu>
+								<iu>
+									<id>org.polarsys.capella.ocl.requester.source.feature.feature.group</id>
+								</iu>
+							</ius>
+							<destination>${project.build.directory}/repository-mirror-ocl-requester</destination>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -132,6 +155,16 @@
 							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-model2ecore -destination ${project.build.directory}/org.polarsys.capella.model2ecore/eclipse</appArgLine>
 						</configuration>
 					</execution>
+					<execution>
+						<id>create-ocl-requester-dropins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<configuration>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-ocl-requester -destination ${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse</appArgLine>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -151,14 +184,19 @@
 								<delete file="${project.build.directory}/org.polarsys.capella.groovy/eclipse/content.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/artifacts.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/content.jar"/>
+								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/artifacts.jar"/>
+								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/content.jar"/>
 								<delete includeemptydirs="true">
 									<fileset dir="${project.build.directory}/org.polarsys.capella.groovy/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/features" includes="**/META-INF/**"/>
+									<fileset dir="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/features" includes="**/META-INF/**"/>
 								</delete>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.groovy"
 									destfile="${project.build.directory}/org.polarsys.capella.groovy-dropins-${project.version}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.model2ecore"
 									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${project.version}.zip"/>
+								<zip basedir="${project.build.directory}/org.polarsys.capella.ocl.requester"
+									destfile="${project.build.directory}/org.polarsys.capella.ocl.requester-dropins-${project.version}.zip"/>
 							</target>
 						</configuration>
 					</execution>
