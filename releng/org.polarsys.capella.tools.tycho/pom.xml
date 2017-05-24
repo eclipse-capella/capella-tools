@@ -31,18 +31,18 @@
 	<properties>
 		<tycho.version>0.24.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<luna-repo.url>http://download.eclipse.org/releases/luna</luna-repo.url>
-		<capella-repo.url>https://hudson.polarsys.org/capella/job/capella-master/lastSuccessfulBuild/artifact/result/publish/org.polarsys.capella/site.p2</capella-repo.url>
-		<kitalpha-repo.url>https://hudson.polarsys.org/kitalpha/job/Kitalpha_runtime/lastSuccessfulBuild/artifact/result/publish/kitalpha_runtime/site.p2</kitalpha-repo.url>
-		<amalgam-repo.url>http://download.eclipse.org/modeling/amalgam/updates/nightly/1.7.x/mars</amalgam-repo.url>
-		<sirius-repo.url>http://download.eclipse.org/sirius/updates/releases/3.1.x/juno</sirius-repo.url>
+		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
+		<capella-repo.url>https://hudson.polarsys.org/capella/view/Capella-v1.1.x/job/capella-v1.1.x/93/artifact/result/publish/org.polarsys.capella/site.p2</capella-repo.url>
+		<kitalpha-repo.url>https://hudson.polarsys.org/kitalpha/job/Kitalpha-v1.1.x/lastSuccessfulBuild/artifact/result/publish/kitalpha_runtime/site.p2</kitalpha-repo.url>
+		<amalgam-repo.url>http://download.eclipse.org/modeling/amalgam/updates/nightly/1.8.0-N20170307-051244/mars</amalgam-repo.url>
+		<sirius-repo.url>http://download.eclipse.org/sirius/updates/stable/4.1.4-S20170321-101206/mars</sirius-repo.url>
 		<query-legacy-repo.url>http://download.eclipse.org/sirius/updates/legacy/1.1.0</query-legacy-repo.url>
-		<groovy-eclipse.url>http://dist.springsource.org/release/GRECLIPSE/e4.2</groovy-eclipse.url>
+		<groovy-eclipse.url>http://dist.springsource.org/snapshot/GRECLIPSE/e4.5</groovy-eclipse.url>
 	</properties>
 	<repositories>
 		<repository>
-			<id>luna</id>
-			<url>${luna-repo.url}</url>
+			<id>mars</id>
+			<url>${mars-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>

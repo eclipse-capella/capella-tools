@@ -41,7 +41,7 @@
 						<configuration>
 							<source>
 								<repository>
-									<url>${project.build.directory}/repository</url>
+									<url>${project.baseUri}/target/repository</url>
 								</repository>
 							</source>
 							<ius>
@@ -64,7 +64,7 @@
 						<configuration>
 							<source>
 								<repository>
-									<url>${project.build.directory}/repository</url>
+									<url>${project.baseUri}/target/repository</url>
 								</repository>
 							</source>
 							<ius>
@@ -87,7 +87,7 @@
 						<configuration>
 							<source>
 								<repository>
-									<url>${project.build.directory}/repository</url>
+									<url>${project.baseUri}/target/repository</url>
 								</repository>
 							</source>
 							<ius>
@@ -110,9 +110,9 @@
 				<configuration>
 					<repositories>
 						<repository>
-							<id>luna</id>
+							<id>mars</id>
 							<layout>p2</layout>
-							<url>${luna-repo.url}</url>
+							<url>${mars-repo.url}</url>
 						</repository>
 					</repositories>
 					<dependencies>
@@ -142,7 +142,7 @@
 							<goal>eclipse-run</goal>
 						</goals>
 						<configuration>
-							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-groovy -destination ${project.build.directory}/org.polarsys.capella.groovy/eclipse</appArgLine>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-groovy -destination ${project.build.directory}/org.polarsys.capella.groovy/eclipse</appArgLine>
 						</configuration>
 					</execution>
 					<execution>
@@ -152,7 +152,7 @@
 							<goal>eclipse-run</goal>
 						</goals>
 						<configuration>
-							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-model2ecore -destination ${project.build.directory}/org.polarsys.capella.model2ecore/eclipse</appArgLine>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-model2ecore -destination ${project.build.directory}/org.polarsys.capella.model2ecore/eclipse</appArgLine>
 						</configuration>
 					</execution>
 					<execution>
@@ -162,7 +162,7 @@
 							<goal>eclipse-run</goal>
 						</goals>
 						<configuration>
-							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source file:${project.build.directory}/repository-mirror-ocl-requester -destination ${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse</appArgLine>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-ocl-requester -destination ${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse</appArgLine>
 						</configuration>
 					</execution>
 				</executions>
