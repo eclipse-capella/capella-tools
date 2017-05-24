@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2017 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -29,7 +29,6 @@ class CapellaQueryMethods {
   }
 
   def install() {
-    
     for (EPackage p : CapellaPackageRegistry.getAllCapellaPackages()) {
       for (EClassifier cls : p.getEClassifiers()){
         if (cls instanceof EClass){
@@ -41,39 +40,12 @@ class CapellaQueryMethods {
     }
 
   }
-  
-  def iterator(delegate){
-    return Iterators.filter(EcoreUtil.getAllContents(domain.getResourceSet(), true), delegate);
-  }
 
   def staticMethods = [
-     all: {
-       Lists.newArrayList(iterator(delegate))
-     },
 
-     each : { closure ->
-       iterator(delegate).each(closure)
-     },
-
-     eachWithIndex : { closure ->
-       iterator(delegate).eachWithIndex(closure)
-     },
-
-     every : { closure ->
-       iterator(delegate).every(closure)
-     },
-
-     any : { closure ->
-       iterator(delegate).any(closure)
-     },
-
-     grep : { object ->
-       iterator(delegate).grep(object)
-     },
-
-     find : { closure ->
-       iterator(delegate).find(closure)
-     }
+       iterator: {
+         Iterators.filter(EcoreUtil.getAllContents(domain.getResourceSet(), true), (Class) delegate)
+       }
 
    ]
 
@@ -87,6 +59,6 @@ class CapellaQueryMethods {
     else {
         throw new NoSuchMethodException()
     }
-}
+  }
 
 }

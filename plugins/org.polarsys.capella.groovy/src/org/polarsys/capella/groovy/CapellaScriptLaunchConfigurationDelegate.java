@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2017 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *  
  * Contributors:
  *    Soyatec - initial API and implementation
+ *    Felix Dorner <felix.dorner@gmail.com>
  *******************************************************************************/
 package org.polarsys.capella.groovy;
 
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -32,24 +32,20 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.polarsys.capella.core.model.helpers.registry.CapellaPackageRegistry;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
 public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
 
-  private static final ImportCustomizer importCustomizer;
-
-  static {
-    importCustomizer = initializeImportCustomizer();
-  }
+//  private static final ImportCustomizer importCustomizer;
+//
+//  static {
+//    importCustomizer = initializeImportCustomizer();
+//  }
 
   public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
       throws CoreException {
@@ -65,9 +61,10 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
 
         Collection<URL> urls = new ArrayList<URL>();
 
+        
+        // Locate jars on the script project's build path and add them to the classloader
         if (capellaScriptFile.getProject().hasNature(JavaCore.NATURE_ID)){
           IJavaProject project = JavaCore.create(capellaScriptFile.getProject());
-
           for (IClasspathEntry entry : project.getRawClasspath()){
             if (entry.getEntryKind() == IClasspathEntry.CPE_LIBRARY){
               try {
@@ -82,8 +79,9 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
         try {
           final Reader reader = new BufferedReader(new InputStreamReader(capellaScriptFile.getContents()));
           CompilerConfiguration c = new CompilerConfiguration();
-          c.setScriptBaseClass("org.polarsys.capella.groovy.CapellaScriptBase");
-          c.addCompilationCustomizers(importCustomizer);
+
+//          c.setScriptBaseClass("org.polarsys.capella.groovy.CapellaScriptBase");
+//          c.addCompilationCustomizers(importCustomizer);
 
           ClassLoader loader = getClass().getClassLoader();
 
@@ -102,20 +100,20 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
     job.schedule();
   }
 
-  private static ImportCustomizer initializeImportCustomizer(){
-
-    ImportCustomizer result = new ImportCustomizer();
-
-    for (EPackage pack : CapellaPackageRegistry.getAllCapellaPackages()){
-      for (EClassifier classifier : pack.getEClassifiers()){
-        if (classifier instanceof EClass) {
-          result.addImports(((EClass) classifier).getInstanceClass().getName());
-        }
-      }
-    }
-
-    return result;
-
-  }
+//  private static ImportCustomizer initializeImportCustomizer(){
+//
+//    ImportCustomizer result = new ImportCustomizer();
+//
+//    for (EPackage pack : CapellaPackageRegistry.getAllCapellaPackages()){
+//      for (EClassifier classifier : pack.getEClassifiers()){
+//        if (classifier instanceof EClass) {
+//          result.addImports(((EClass) classifier).getInstanceClass().getName());
+//        }
+//      }
+//    }
+//
+//    return result;
+//
+//  }
 
 }

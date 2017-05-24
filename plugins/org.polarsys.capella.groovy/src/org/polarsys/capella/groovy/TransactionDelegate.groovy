@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.polarsys.capella.groovy
 
+import org.eclipse.sirius.business.api.query.DViewQuery
 import org.eclipse.sirius.business.api.session.Session
 import org.eclipse.sirius.viewpoint.DView
 
@@ -29,7 +30,7 @@ class TransactionDelegate {
    * @return A collection that contains all diagrams of the selected model
    */
   def diagrams(){
-    session.ownedViews.collectMany { it.ownedRepresentations } 
+    session.ownedViews.collectMany { new DViewQuery(it).getLoadedRepresentations() } 
   }
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <!--
-  Copyright (c) 2015 THALES GLOBAL SERVICES.
+  Copyright (c) 2015, 2017 THALES GLOBAL SERVICES.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
 
   Contributors:
        Soyatec - initial API and implementation
+       Felix Dorner - Wizard-based example
 -->
 <plugin>
    <extension
@@ -18,5 +19,33 @@
             id="org.polarsys.capella.groovy.ui.capellaScriptTabGroup"
             type="org.polarsys.capella.groovy.capellaScript">
       </launchConfigurationTabGroup>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.codehaus.groovy.eclipse"
+            class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            icon="icons/MDK16x16.gif"
+            id="org.polarsys.capella.groovy.exampleWizard"
+            name="Capella Groovy Script Example"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            id="org.polarsys.capella.groovy.example"
+            wizardID="org.polarsys.capella.groovy.exampleWizard">
+         <projectDescriptor
+               contentURI="examples/capella.groovy.example/"
+               description="An example capella groovy script project. This example requires that the In-Flight example model is imported in the workspace. This model can be downloaded here: http://download.polarsys.org/capella/samples/IFE_samplemodel_Capella_1.1.x.zip"
+               name="capella.groovy.example">
+         </projectDescriptor>
+         <fileToOpen
+               editorID="org.codehaus.groovy.eclipse.editor.GroovyEditor"
+               location="/capella.groovy.example/src/capella/groovy/example/Example.groovy">
+         </fileToOpen>
+      </example>
    </extension>
 </plugin>

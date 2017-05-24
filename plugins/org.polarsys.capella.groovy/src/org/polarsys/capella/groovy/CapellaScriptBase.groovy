@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 THALES GLOBAL SERVICES.
+ * Copyright (c) 2015, 2017 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *  
  * Contributors:
  *    Soyatec - initial API and implementation
+ *    Felix Dorner <felix.dorner@gmail.com>
  *******************************************************************************/
 package org.polarsys.capella.groovy;
 
@@ -55,23 +56,45 @@ public abstract class CapellaScriptBase extends Script {
     }
   }
 
+  /** 
+   * Sends a message of severity 'info' to the capella log
+   */
   void info(object) {
     log(object, "info")
   }
 
+  /**
+   * Sends a message of severity 'warning' to the capella log
+   */
   void warn(object) {
     log(object, "warn");
   }
 
+  /**
+   * Sends a message of severity 'error' to the capella log
+   */
   void error(object) {
     log(object, "error");
   }
 
-  def model(path, closure){
+  /**
+   * Execute closure in a write transaction for a given capella model in the workspace.
+   * @param path - the workspace relative path to the capella model
+   * @param closure - the closure to execute
+   * @return
+   */
+  def model(String path, Closure closure){
     model(path, "write", closure)
   }
 
-  def model(path, txmode, closure) {
+  /**
+   * Execute closure in a transaction for a given capella model in the workspace.
+   * @param path the workspace relative path to the capella model
+   * @param txmode either "read" for a readonly transaction, or "write" for a write transaction
+   * @param closure the closure to execute
+   * @return
+   */
+  def model(String path, String txmode, Closure closure) {
     URI uri = URI.createPlatformResourceURI path, true
     IProgressMonitor monitor = new NullProgressMonitor()
     Session session = SessionManager.INSTANCE.getSession uri, monitor
