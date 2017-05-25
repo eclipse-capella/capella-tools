@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright (c) 2015, 2016 THALES GLOBAL SERVICES.
+  Copyright (c) 2015, 2017 THALES GLOBAL SERVICES.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -10,22 +10,22 @@
        Joao Barata - initial API and implementation
 -->
 <site>
-   <feature url="features/org.polarsys.capella.groovy.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.groovy.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.groovy.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.groovy.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.groovy.source.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.groovy.source.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.groovy.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.groovy.source.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.model2ecore.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.model2ecore.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.model2ecore.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.model2ecore.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.model2ecore.source.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.model2ecore.source.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.model2ecore.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.model2ecore.source.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.ocl.requester.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.ocl.requester.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.ocl.requester.source.feature_1.0.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.source.feature" version="1.0.0.qualifier">
+   <feature url="features/org.polarsys.capella.ocl.requester.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.source.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
    <category-def name="org.polarsys.capella.tools.category" label="Capella Tools">
