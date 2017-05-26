@@ -8,6 +8,7 @@
 
   Contributors:
        Joao Barata - initial API and implementation
+       Felix Dorner - add repository reference for Groovy-Eclipse
 -->
 <site>
    <feature url="features/org.polarsys.capella.groovy.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.groovy.feature" version="1.1.0.qualifier">
@@ -51,4 +52,7 @@
         OCL interpreter to build requests on Capella models
       </description>
    </category-def>
+   
+   <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
+   <repository-reference location="http://dist.springsource.org/snapshot/GRECLIPSE/e4.5" enabled="true" />
 </site>

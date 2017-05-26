@@ -8,6 +8,7 @@
 
   Contributors:
        Joao Barata - initial API and implementation
+       Felix Dorner - require groovy eclipse
 -->
 <feature
       id="org.polarsys.capella.groovy.feature"
@@ -27,9 +28,10 @@
       %license
    </license>
 
-   <includes
-         id="org.codehaus.groovy23.feature"
-         version="0.0.0"/>
+   <requires>
+      <import feature="org.codehaus.groovy.eclipse.feature"/>
+      <import feature="org.eclipse.jdt"/>
+   </requires>
 
    <plugin
          id="org.polarsys.capella.groovy"

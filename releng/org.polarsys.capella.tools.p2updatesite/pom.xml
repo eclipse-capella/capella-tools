@@ -22,12 +22,41 @@
 	<artifactId>org.polarsys.capella.tools.p2updatesite</artifactId>
 	<packaging>eclipse-repository</packaging>
 
-	<!-- customizations -->
-	<!--version>1.0.0.${unqualifiedVersion}</version-->
 	<build>
-		<finalName>org.polarsys.capella.tools-updatesite-${project.version}</finalName>
 		<plugins>
+			<!--
+				Add groovy eclipse update site reference to find dependencies 
+				workaround https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 
+				As a side-effect, this will create a browsable index.html	
+			-->
 			<plugin>
+				<groupId>org.jboss.tools.tycho-plugins</groupId>
+				<artifactId>repository-utils</artifactId>
+				<version>0.26.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>generate-repository-facade</goal>
+						</goals>
+						<configuration>
+							<!-- customize generated index.html -->
+							<siteTemplateFolder>siteTemplate</siteTemplateFolder>
+							<symbols>
+								<update.site.version>${qualifiedVersion}</update.site.version>
+								<update.site.name>Capella Tools</update.site.name>
+								<target.capella.version>1.1.0</target.capella.version>
+								<update.site.description>Capella Tools include Capella OCL Requestor, Groovy Integration and Model2Ecore transformation</update.site.description>
+							</symbols>
+							<!-- add groovy eclipse update site reference -->
+							<associateSites>
+								<associateSite>http://dist.springsource.org/snapshot/GRECLIPSE/e4.5</associateSite>
+							</associateSites>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>	
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-p2-extras-plugin</artifactId>
 				<version>${tycho.version}</version>
@@ -192,11 +221,13 @@
 									<fileset dir="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/features" includes="**/META-INF/**"/>
 								</delete>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.groovy"
-									destfile="${project.build.directory}/org.polarsys.capella.groovy-dropins-${project.version}.zip"/>
+									destfile="${project.build.directory}/org.polarsys.capella.groovy-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.model2ecore"
-									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${project.version}.zip"/>
+									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.ocl.requester"
-									destfile="${project.build.directory}/org.polarsys.capella.ocl.requester-dropins-${project.version}.zip"/>
+									destfile="${project.build.directory}/org.polarsys.capella.ocl.requester-dropins-${qualifiedVersion}.zip"/>
+								<move file="${project.build.directory}/org.polarsys.capella.tools.p2updatesite-${project.version}.zip"
+									tofile="${project.build.directory}/org.polarsys.capella.tools-updatesite-${qualifiedVersion}.zip"/>
 							</target>
 						</configuration>
 					</execution>
@@ -204,4 +235,13 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jboss-repository</id>
+			<name>JBoss Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project> 

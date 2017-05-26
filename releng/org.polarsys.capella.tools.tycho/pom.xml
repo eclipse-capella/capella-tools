@@ -33,7 +33,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
 		<capella-repo.url>https://hudson.polarsys.org/capella/view/Capella-v1.1.x/job/capella-v1.1.x/93/artifact/result/publish/org.polarsys.capella/site.p2</capella-repo.url>
-		<kitalpha-repo.url>https://hudson.polarsys.org/kitalpha/job/Kitalpha-v1.1.x/lastSuccessfulBuild/artifact/result/publish/kitalpha_runtime/site.p2</kitalpha-repo.url>
+		<kitalpha-repo.url>https://hudson.polarsys.org/kitalpha/job/kitalpha-v1.1.x/269/artifact/result/publish/kitalpha_runtime/site.p2</kitalpha-repo.url>
 		<amalgam-repo.url>http://download.eclipse.org/modeling/amalgam/updates/nightly/1.8.0-N20170307-051244/mars</amalgam-repo.url>
 		<sirius-repo.url>http://download.eclipse.org/sirius/updates/stable/4.1.4-S20170321-101206/mars</sirius-repo.url>
 		<query-legacy-repo.url>http://download.eclipse.org/sirius/updates/legacy/1.1.0</query-legacy-repo.url>

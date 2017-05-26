@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>${update.site.name} Update Site: ${update.site.version}</title>
+<link rel="stylesheet" type="text/css" href="http://polarsys.org/capella/styles.css"/>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Jura:400"/>
+<link rel="stylesheet" type="text/css" href="web/site.css"/>
+</head>
+<body>
+  <div id="page">
+    <img src="http://polarsys.org/capella/images/logo_capella_350.png"/>
+    <h2 class="title">${update.site.name} Update Site - Version ${update.site.version}</h2>
+    <p>${update.site.description}</p>
+    <div>
+      To install from this site, start up Capella ${target.capella.version} and select <i>Help > Install New Software...</i> Select <i>Add...</i>  and paste this URL into location field of the dialog. Choose a suitable name for the site, and press OK. Then select the features you want to install and make sure that <i>Contact all update sites during install to find required software is checked</i>
+      <table>
+	${site.contents}
+      </table>
+    </div>
+  </div>
+</html>
