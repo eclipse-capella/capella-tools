@@ -1,0 +1,19 @@
+// This is the groovy-capella reference dsld file which adds completion/documentation support
+// for editing groovy capella scripts
+
+
+currentType(subType("org.polarsys.capella.core.data.capellacore.CapellaElement")).accept {
+    provider = "Groovy-Capella"
+    method name:"getPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Get the property value named by key and returns its value"
+	method name:"setPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Sets and possibly overwrites the property value with the given name to the given value. Returns the old value of the property, or null if the property didn't exist before"
+}
+
+currentType(subType("org.eclipse.sirius.diagram.DDiagram")).accept {
+	provider = "Groovy-Capella"
+	method name:"export", type:Object, isStatic:false, declaringType:currentType, doc:"Exports the diagram as an image"
+}
+
+// tell the engine about the custom delegate inside the closure of a call to model() 
+and(enclosingCallName("model"), currentType("org.polarsys.capella.groovy.CapellaScriptBase")).accept {
+	setDelegateType("org.polarsys.capella.groovy.TransactionDelegate")
+}

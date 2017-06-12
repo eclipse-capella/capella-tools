@@ -31,6 +31,11 @@
             name="Capella Groovy Script Example"
             project="true">
       </wizard>
+      <wizard
+            class="org.polarsys.capella.groovy.ui.wizard.CapellaGroovyProjectWizard"
+            id="org.polarsys.capella.groovy.ui.newCapellaGroovyProject"
+            name="Capella Groovy Project">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.emf.common.ui.examples">
@@ -48,4 +53,31 @@
          </fileToOpen>
       </example>
    </extension>
+   <extension
+         point="org.eclipse.emf.validation.constraintProviders">
+      <constraintProvider
+            cache="true">
+         <package
+               namespaceUri="org.polarsys.capella.groovy.ui.package1">
+         </package>
+      </constraintProvider>
+   </extension>
+   <extension
+         point="org.eclipse.pde.ui.pluginContent">
+      <wizard
+            class="org.polarsys.capella.groovy.ui.wizard.CapellaGroovyTemplate"
+            id="org.polarsys.capella.groovy.ui.capellaGroovyProjectTemplate"
+            java="true"
+            name="name"
+            pureOSGi="false"
+            rcp="false"
+            requiresActivator="false"
+            ui-content="true">
+      </wizard>
+   </extension>
+   <extension point="org.eclipse.jdt.core.classpathContainerInitializer">
+   <classpathContainerInitializer
+      id="Capella Groovy DSL"
+      class="org.polarsys.capella.groovy.ui.CapellaGroovyDSLSupport"/>
+</extension>
 </plugin>

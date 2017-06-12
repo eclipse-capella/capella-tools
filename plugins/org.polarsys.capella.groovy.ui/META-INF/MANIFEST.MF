@@ -14,7 +14,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jdt.debug.ui,
  org.eclipse.jdt.launching,
  org.eclipse.ui.ide,
- org.eclipse.emf.common.ui
+ org.eclipse.emf.common.ui,
+ org.eclipse.pde.ui,
+ org.codehaus.groovy.eclipse.core;bundle-version="2.9.2",
+ org.codehaus.groovy.eclipse.dsl;bundle-version="2.9.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Export-Package: org.polarsys.capella.groovy.ui
+Export-Package: org.polarsys.capella.groovy.ui,
+ org.polarsys.capella.groovy.ui.launch,
+ org.polarsys.capella.groovy.ui.wizard
