@@ -24,19 +24,22 @@ class TransactionDelegate {
   /**
    * The current session
    */
-  Session session
+  final Session session
   
   TransactionDelegate(session){
     this.session = session
   }
 
   /**
-   * @return A collection that contains all diagrams of the active model
+   * @return A List that contains all diagrams of the active model
    */
   List<DDiagram> getDiagrams(){
     ((Iterable)session.ownedViews).collectMany { new DViewQuery(it).getLoadedRepresentations() }.grep(DDiagram)
   }
   
+  /**
+   * @return A List that contains all tables of the active model
+   */
   List<DTable> getTables(){
     ((Iterable)session.ownedViews).collectMany { new DViewQuery(it).getLoadedRepresentations() }.grep(DTable)
   }

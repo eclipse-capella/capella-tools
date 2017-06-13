@@ -4,6 +4,7 @@ Bundle-Name: Capella Groovy Example
 Bundle-SymbolicName: capella.groovy.example
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.polarsys.capella.groovy;bundle-version="1.0.0",
+Require-Bundle: org.polarsys.capella.groovy;bundle-version="1.1.0",
  org.polarsys.capella.core.data.gen;bundle-version="1.1.0",
- org.codehaus.groovy;bundle-version="2.4.11"
+ org.codehaus.groovy;bundle-version="2.4.11",
+ org.eclipse.sirius.diagram

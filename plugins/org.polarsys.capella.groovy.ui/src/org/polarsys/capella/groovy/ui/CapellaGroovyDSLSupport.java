@@ -28,7 +28,7 @@ import org.eclipse.jdt.core.JavaCore;
 
 public class CapellaGroovyDSLSupport extends ClasspathContainerInitializer {
 
-  public static final IPath CONTAINER_PATH = new Path("Capella Groovy DSL"); 
+  public static final IPath CONTAINER_PATH = new Path("CAPELLA_GROOVY_DSL_SUPPORT"); 
 
   private static final class DSLDClasspathContainer implements IClasspathContainer {
     

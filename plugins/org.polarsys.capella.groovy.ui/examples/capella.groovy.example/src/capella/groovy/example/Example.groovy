@@ -76,12 +76,14 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
 
 
   /* 
-   * We can also write to the model. Let's capitalize all Function names that
-   * have something to do with a Root. Note that after the script completes, you
+   * We can also write to the model. This snippet will capitalize 
+   * all root function names. Note that after the script completes, you
    * can actually 'undo' changes made by the script. Nice!
    */
-  AbstractFunction.grep ({it.name =~ /Root/ }).each {
-    it.name = it.name.toUpperCase()
+  AbstractFunction.each {
+    if (it.name =~ /Root/) {
+      it.name = it.name.toUpperCase()
+    }
   }
 
   /*
@@ -91,14 +93,14 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
   /*
    * Log the diagram names
    */
-  diagrams().each {
+  getDiagrams().each {
     info it.name
   }
 
   /*
    * We can also export diagrams as images. Here we export only the PAB diagrams.
    */
-  diagrams().grep ({it.description.titleExpression =~ "PAB"})
+  getDiagrams().grep ({it.description.titleExpression =~ "PAB"})
             .each {
                 it.export("In-Flight Entertainment System/${it.name}.jpg")
             }

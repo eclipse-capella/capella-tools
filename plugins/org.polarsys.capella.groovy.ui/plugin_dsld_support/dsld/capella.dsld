@@ -1,19 +1,45 @@
+/*******************************************************************************
+ * Copyright (c) 2017 THALES GLOBAL SERVICES.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Felix Dorner - initial API and implementation
+ *******************************************************************************/
+
 // This is the groovy-capella reference dsld file which adds completion/documentation support
 // for editing groovy capella scripts
 
 
 currentType(subType("org.polarsys.capella.core.data.capellacore.CapellaElement")).accept {
-    provider = "Groovy-Capella"
+    provider = "Capella-Groovy"
     method name:"getPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Get the property value named by key and returns its value"
-	method name:"setPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Sets and possibly overwrites the property value with the given name to the given value. Returns the old value of the property, or null if the property didn't exist before"
+    method name:"setPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Sets and possibly overwrites the property value with the given name to the given value. Returns the old value of the property, or null if the property didn't exist before"
 }
 
 currentType(subType("org.eclipse.sirius.diagram.DDiagram")).accept {
-	provider = "Groovy-Capella"
-	method name:"export", type:Object, isStatic:false, declaringType:currentType, doc:"Exports the diagram as an image"
+    provider = "Capella-Groovy"
+    method  name:"export", 
+            params: [ path: String], 
+            type:void, 
+            isStatic:false, 
+            declaringType:currentType, 
+            doc:"""
+            Export the diagram as an image to the given file system path. If the given path is relative, it is interpreted relative to the workspace root.
+            """ 
 }
 
-// tell the engine about the custom delegate inside the closure of a call to model() 
-and(enclosingCallName("model"), currentType("org.polarsys.capella.groovy.CapellaScriptBase")).accept {
-	setDelegateType("org.polarsys.capella.groovy.TransactionDelegate")
+// inside the closure argument for model() all methods from TransactionDelegate are available:
+and(enclosingCallName("model"), currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase"))).accept {
+	provider = "Capella-Groovy"
+  property name:"session", type: "org.eclipse.sirius.business.api.Session", doc: "The session associated to the active model"
+  method name:"getDiagrams", type: "java.util.List<org.eclipse.sirius.diagram.DDiagram>", doc: "A list of all diagrams in the active model"
+  method name:"getTables", type: "java.util.List<org.eclipse.sirius.table.metamodel.table.DTable>", doc: "A list of all tables in the active model"
+}
+
+currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase")).accept {
+  provider = "Capella-Groovy"
+  property name:"args", type: String[], isStatic:false, doc:"A String[] that contains the script arguments"
 }

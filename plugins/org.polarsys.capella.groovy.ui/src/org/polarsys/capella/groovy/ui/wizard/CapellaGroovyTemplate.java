@@ -51,7 +51,7 @@ public class CapellaGroovyTemplate extends NewPluginTemplateWizard {
         IJavaProject javaProject = JavaCore.create(project);
         GroovyRuntime.addLibraryToClasspath(javaProject, CapellaGroovyDSLSupport.CONTAINER_PATH, false);
         GroovyRuntime.addLibraryToClasspath(javaProject, GroovyDSLCoreActivator.CLASSPATH_CONTAINER_ID, false);
-        
+
       } catch (CoreException e) {
         CapellaGroovyUIPlugin.getInstance().getLog().log(new Status(e.getStatus().getSeverity(), CapellaGroovyUIPlugin.PLUGIN_ID, e.getStatus().getMessage(), e.getStatus().getException()));
       }
@@ -69,7 +69,8 @@ public class CapellaGroovyTemplate extends NewPluginTemplateWizard {
             return new IPluginReference[] { 
                 new PluginReference("org.codehaus.groovy"),
                 new PluginReference("org.polarsys.capella.groovy"),
-                new PluginReference("org.polarsys.capella.core.data.gen")
+                new PluginReference("org.polarsys.capella.core.data.gen"),
+                new PluginReference("org.eclipse.sirius.diagram"),
             };
                 
           }

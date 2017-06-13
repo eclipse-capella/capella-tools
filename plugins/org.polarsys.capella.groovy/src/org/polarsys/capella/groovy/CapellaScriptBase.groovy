@@ -79,7 +79,7 @@ public abstract class CapellaScriptBase extends Script {
 
   /**
    * Execute closure in a write transaction for a given capella model in the workspace.
-   * @param path - the workspace relative path to the capella model
+   * @param path - A path that points to an .aird file in the workspace. Must start with '/'.
    * @param closure - the closure to execute
    * @return
    */
@@ -89,7 +89,7 @@ public abstract class CapellaScriptBase extends Script {
 
   /**
    * Execute closure in a transaction for a given capella model in the workspace.
-   * @param path the workspace relative path to the capella model
+   * @param path A path that points to an .aird file in the workspace. Must start with '/'.
    * @param txmode either "read" for a readonly transaction, or "write" for a write transaction
    * @param closure the closure to execute
    * @return
