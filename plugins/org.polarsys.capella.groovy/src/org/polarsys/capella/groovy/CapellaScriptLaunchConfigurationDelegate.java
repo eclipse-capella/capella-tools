@@ -11,16 +11,16 @@
  *******************************************************************************/
 package org.polarsys.capella.groovy;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.codehaus.groovy.control.CompilationUnit;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.runtime.InvokerHelper;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -35,17 +36,14 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyCodeSource;
 
 public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
 
-//  private static final ImportCustomizer importCustomizer;
-//
-//  static {
-//    importCustomizer = initializeImportCustomizer();
-//  }
 
   public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
       throws CoreException {
@@ -77,21 +75,25 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
         }
 
         try {
-          final Reader reader = new BufferedReader(new InputStreamReader(capellaScriptFile.getContents()));
-          CompilerConfiguration c = new CompilerConfiguration();
+          Bundle groovy = Platform.getBundle("org.codehaus.groovy");
+          final GroovyClassLoader transformLoader = new GroovyClassLoader(groovy.adapt(BundleWiring.class).getClassLoader());
+          GroovyClassLoader loader = new GroovyClassLoader(getClass().getClassLoader()) {
+            @Override
+            protected CompilationUnit createCompilationUnit(CompilerConfiguration config, CodeSource source) {
+              return new CompilationUnit(config, source, this, transformLoader, true, null, null);
+            }
+          };
 
-//          c.setScriptBaseClass("org.polarsys.capella.groovy.CapellaScriptBase");
-//          c.addCompilationCustomizers(importCustomizer);
-
-          ClassLoader loader = getClass().getClassLoader();
-
-          if (urls.size() > 0){
-            loader = new URLClassLoader(urls.toArray(new URL[urls.size()]), loader);        
+          for (URL u : urls){
+            loader.addURL(u);
           }
 
-          final GroovyShell shell = new GroovyShell(loader, new Binding(args), c);
-          shell.evaluate(reader);
+          Class<?> cl = loader.parseClass(new GroovyCodeSource(capellaScriptFile.getLocation().toFile(), capellaScriptFile.getCharset()));
+          InvokerHelper.runScript(cl, args);
+
         } catch (CoreException e) {
+          throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
+        } catch (IOException e) {
           throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
         }
         return Status.OK_STATUS;
@@ -99,21 +101,5 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
     };
     job.schedule();
   }
-
-//  private static ImportCustomizer initializeImportCustomizer(){
-//
-//    ImportCustomizer result = new ImportCustomizer();
-//
-//    for (EPackage pack : CapellaPackageRegistry.getAllCapellaPackages()){
-//      for (EClassifier classifier : pack.getEClassifiers()){
-//        if (classifier instanceof EClass) {
-//          result.addImports(((EClass) classifier).getInstanceClass().getName());
-//        }
-//      }
-//    }
-//
-//    return result;
-//
-//  }
 
 }
