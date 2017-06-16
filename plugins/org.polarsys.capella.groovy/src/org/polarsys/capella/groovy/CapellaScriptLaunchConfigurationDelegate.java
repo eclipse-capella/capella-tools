@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
@@ -53,13 +54,11 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
       public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
         String location = configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_SCRIPT_LOCATION.name(),
             (String) null);
-        String[] args = configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), "")
-            .split("\\s+");
+        String[] args = DebugPlugin.parseArguments(configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), ""));
         IFile capellaScriptFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(location));
 
         Collection<URL> urls = new ArrayList<URL>();
 
-        
         // Locate jars on the script project's build path and add them to the classloader
         if (capellaScriptFile.getProject().hasNature(JavaCore.NATURE_ID)){
           IJavaProject project = JavaCore.create(capellaScriptFile.getProject());
