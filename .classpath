@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.command.recorder.ui/src"/>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.command.recorder/src"/>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.groovy.ui/src"/>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.groovy/src"/>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.model2ecore/src"/>
+	<classpathentry kind="src" path="plugins/org.polarsys.capella.ocl.requester/src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="plugins/org.polarsys.capella.command.recorder/bin"/>
+</classpath>

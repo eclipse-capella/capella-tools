@@ -13,13 +13,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<relativePath>../../releng/org.polarsys.capella.tools.tycho/pom.xml</relativePath>
-		<groupId>org.polarsys.capella.tools.group</groupId>
-		<artifactId>parent</artifactId>
-		<version>1.1.0-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
+		<groupId>org.polarsys</groupId>
+		<artifactId>org.polarsys.capella.tools</artifactId>
+		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>org.polarsys.capella.tools.p2updatesite</artifactId>
+	<artifactId>org.polarsys.capella.tools.site</artifactId>
 	<packaging>eclipse-repository</packaging>
 
 	<build>
@@ -45,12 +45,12 @@
 							<symbols>
 								<update.site.version>${qualifiedVersion}</update.site.version>
 								<update.site.name>Capella Tools</update.site.name>
-								<target.capella.version>1.1.0</target.capella.version>
-								<update.site.description>Capella Tools include Capella OCL Requestor, Groovy Integration and Model2Ecore transformation</update.site.description>
+								<target.capella.version>1.2.0</target.capella.version>
+								<update.site.description>Capella Tools include Capella Command Recorder, Capella OCL Requestor, Groovy Integration and Model2Ecore transformation</update.site.description>
 							</symbols>
 							<!-- add groovy eclipse update site reference -->
 							<associateSites>
-								<associateSite>http://dist.springsource.org/snapshot/GRECLIPSE/e4.5</associateSite>
+								<associateSite>http://dist.springsource.org/snapshot/GRECLIPSE/e4.6</associateSite>
 							</associateSites>
 						</configuration>
 					</execution>
@@ -59,8 +59,31 @@
 			<plugin>	
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-p2-extras-plugin</artifactId>
-				<version>${tycho.version}</version>
+				<version>${tycho-version}</version>
 				<executions>
+					<execution>
+						<id>mirror-command-recorder</id>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>${project.baseUri}/target/repository</url>
+								</repository>
+							</source>
+							<ius>
+								<iu>
+									<id>org.polarsys.capella.command.recorder.feature.feature.group</id>
+								</iu>
+								<iu>
+									<id>org.polarsys.capella.command.recorder.feature.source.feature.group</id>
+								</iu>
+							</ius>
+							<destination>${project.build.directory}/repository-mirror-command-recorder</destination>
+						</configuration>
+					</execution>
 					<execution>
 						<id>mirror-groovy</id>
 						<phase>package</phase>
@@ -78,7 +101,7 @@
 									<id>org.polarsys.capella.groovy.feature.feature.group</id>
 								</iu>
 								<iu>
-									<id>org.polarsys.capella.groovy.source.feature.feature.group</id>
+									<id>org.polarsys.capella.groovy.feature.source.feature.group</id>
 								</iu>
 							</ius>
 							<destination>${project.build.directory}/repository-mirror-groovy</destination>
@@ -101,7 +124,7 @@
 									<id>org.polarsys.capella.model2ecore.feature.feature.group</id>
 								</iu>
 								<iu>
-									<id>org.polarsys.capella.model2ecore.source.feature.feature.group</id>
+									<id>org.polarsys.capella.model2ecore.feature.source.feature.group</id>
 								</iu>
 							</ius>
 							<destination>${project.build.directory}/repository-mirror-model2ecore</destination>
@@ -124,7 +147,7 @@
 									<id>org.polarsys.capella.ocl.requester.feature.feature.group</id>
 								</iu>
 								<iu>
-									<id>org.polarsys.capella.ocl.requester.source.feature.feature.group</id>
+									<id>org.polarsys.capella.ocl.requester.feature.source.feature.group</id>
 								</iu>
 							</ius>
 							<destination>${project.build.directory}/repository-mirror-ocl-requester</destination>
@@ -135,13 +158,13 @@
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-eclipserun-plugin</artifactId>
-				<version>${tycho.version}</version>
+				<version>${tycho-version}</version>
 				<configuration>
 					<repositories>
 						<repository>
-							<id>mars</id>
+							<id>eclipse</id>
 							<layout>p2</layout>
-							<url>${mars-repo.url}</url>
+							<url>${eclipse-repo-url}</url>
 						</repository>
 					</repositories>
 					<dependencies>
@@ -164,6 +187,16 @@
 					</dependencies>
 				</configuration>
 				<executions>
+					<execution>
+						<id>create-command-recorder-dropins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<configuration>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-command-recorder -destination ${project.build.directory}/org.polarsys.capella.command.recorder/eclipse</appArgLine>
+						</configuration>
+					</execution>
 					<execution>
 						<id>create-groovy-dropins</id>
 						<phase>package</phase>
@@ -209,6 +242,8 @@
 						</goals>
 						<configuration>                       
 							<target>
+								<delete file="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/artifacts.jar"/>
+								<delete file="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/content.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.groovy/eclipse/artifacts.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.groovy/eclipse/content.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/artifacts.jar"/>
@@ -216,17 +251,20 @@
 								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/artifacts.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/content.jar"/>
 								<delete includeemptydirs="true">
+									<fileset dir="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.groovy/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/features" includes="**/META-INF/**"/>
 								</delete>
+								<zip basedir="${project.build.directory}/org.polarsys.capella.command.recorder"
+									destfile="${project.build.directory}/org.polarsys.capella.command.recorder-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.groovy"
 									destfile="${project.build.directory}/org.polarsys.capella.groovy-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.model2ecore"
 									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.ocl.requester"
 									destfile="${project.build.directory}/org.polarsys.capella.ocl.requester-dropins-${qualifiedVersion}.zip"/>
-								<move file="${project.build.directory}/org.polarsys.capella.tools.p2updatesite-${project.version}.zip"
+								<move file="${project.build.directory}/org.polarsys.capella.tools.site-${project.version}.zip"
 									tofile="${project.build.directory}/org.polarsys.capella.tools-updatesite-${qualifiedVersion}.zip"/>
 							</target>
 						</configuration>
@@ -240,7 +278,7 @@
 		<pluginRepository>
 			<id>jboss-repository</id>
 			<name>JBoss Repository</name>
-			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+			<url>http://repository.jboss.org/nexus/content/repositories/releases/</url>
 		</pluginRepository>
 	</pluginRepositories>
 

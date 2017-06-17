@@ -11,27 +11,39 @@
        Felix Dorner - add repository reference for Groovy-Eclipse
 -->
 <site>
-   <feature url="features/org.polarsys.capella.groovy.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.groovy.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.command.recorder.feature" version="1.2.0.qualifier">
+      <category name="org.polarsys.capella.tools.command.recorder.category"/>
+   </feature>
+   <feature id="org.polarsys.capella.command.recorder.feature.source" version="1.2.0.qualifier">
+      <category name="org.polarsys.capella.tools.command.recorder.category"/>
+   </feature>
+   <feature id="org.polarsys.capella.groovy.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.groovy.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.groovy.source.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.groovy.feature.source" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.model2ecore.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.model2ecore.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.model2ecore.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.model2ecore.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.model2ecore.source.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.model2ecore.feature.source" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.ocl.requester.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.ocl.requester.feature" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
-   <feature url="features/org.polarsys.capella.ocl.requester.source.feature_1.1.0.qualifier.jar" id="org.polarsys.capella.ocl.requester.source.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.ocl.requester.feature.source" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
    <category-def name="org.polarsys.capella.tools.category" label="Capella Tools">
       <description>
         A set of development/technical tools for Capella
+      </description>
+   </category-def>
+   <category-def name="org.polarsys.capella.tools.command.recorder.category" label="Command Recorder">
+      <category name="org.polarsys.capella.tools.category"/>
+      <description>
+        Command Recorder for Capella
       </description>
    </category-def>
    <category-def name="org.polarsys.capella.tools.groovy.category" label="Groovy for Capella">
@@ -54,5 +66,5 @@
    </category-def>
    
    <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
-   <repository-reference location="http://dist.springsource.org/snapshot/GRECLIPSE/e4.5" enabled="true" />
+   <repository-reference location="http://dist.springsource.org/snapshot/GRECLIPSE/e4.6" enabled="true" />
 </site>
