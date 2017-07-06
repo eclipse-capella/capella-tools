@@ -35,6 +35,12 @@
    <feature id="org.polarsys.capella.ocl.requester.feature.source" version="1.1.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
+   <feature id="org.polarsys.capella.resourceset.viewer.feature" version="1.2.0.qualifier">
+      <category name="org.polarsys.capella.resourceset.viewer.category"/>
+   </feature>
+   <feature id="org.polarsys.capella.resourceset.viewer.feature.source" version="1.2.0.qualifier">
+      <category name="org.polarsys.capella.resourceset.viewer.category"/>
+   </feature>
    <category-def name="org.polarsys.capella.tools.category" label="Capella Tools">
       <description>
         A set of development/technical tools for Capella
@@ -64,7 +70,13 @@
         OCL interpreter to build requests on Capella models
       </description>
    </category-def>
-   
+   <category-def name="org.polarsys.capella.resourceset.viewer.category" label="Resourceset Viewer">
+      <category name="org.polarsys.capella.tools.category"/>
+      <description>
+        Resourceset Viewer for Capella
+      </description>
+   </category-def>
+
    <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
    <repository-reference location="http://dist.springsource.org/snapshot/GRECLIPSE/e4.6" enabled="true" />
 </site>

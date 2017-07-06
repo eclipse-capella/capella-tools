@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.polarsys.capella.resourceset.viewer;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.polarsys.capella.core.model.handler,
+ org.polarsys.capella.common.ui
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-Activator: org.polarsys.capella.resourceset.viewer.ResourceSetViewerPlugin
+Export-Package: org.polarsys.capella.resourceset.viewer
+Bundle-ActivationPolicy: lazy

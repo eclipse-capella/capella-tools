@@ -46,7 +46,7 @@
 								<update.site.version>${qualifiedVersion}</update.site.version>
 								<update.site.name>Capella Tools</update.site.name>
 								<target.capella.version>1.2.0</target.capella.version>
-								<update.site.description>Capella Tools include Capella Command Recorder, Capella OCL Requestor, Groovy Integration and Model2Ecore transformation</update.site.description>
+								<update.site.description>Capella Tools include Capella Resourceset Viewer, Capella Command Recorder, Capella OCL Requestor, Groovy Integration and Model2Ecore transformation</update.site.description>
 							</symbols>
 							<!-- add groovy eclipse update site reference -->
 							<associateSites>
@@ -153,6 +153,29 @@
 							<destination>${project.build.directory}/repository-mirror-ocl-requester</destination>
 						</configuration>
 					</execution>
+					<execution>
+						<id>mirror-resourceset-viewer</id>
+						<phase>package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+						<configuration>
+							<source>
+								<repository>
+									<url>${project.baseUri}/target/repository</url>
+								</repository>
+							</source>
+							<ius>
+								<iu>
+									<id>org.polarsys.capella.resourceset.viewer.feature.feature.group</id>
+								</iu>
+								<iu>
+									<id>org.polarsys.capella.resourceset.viewer.feature.source.feature.group</id>
+								</iu>
+							</ius>
+							<destination>${project.build.directory}/repository-mirror-resourceset-viewer</destination>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -227,6 +250,16 @@
 							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-ocl-requester -destination ${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse</appArgLine>
 						</configuration>
 					</execution>
+					<execution>
+						<id>create-resourceset-viewer-dropins</id>
+						<phase>package</phase>
+						<goals>
+							<goal>eclipse-run</goal>
+						</goals>
+						<configuration>
+							<appArgLine>-application org.eclipse.equinox.p2.repository.repo2runnable -source ${project.baseUri}/target/repository-mirror-resourceset-viewer -destination ${project.build.directory}/org.polarsys.capella.resourceset.viewer/eclipse</appArgLine>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -240,7 +273,7 @@
 						<goals>
 							<goal>run</goal>
 						</goals>
-						<configuration>                       
+						<configuration>
 							<target>
 								<delete file="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/artifacts.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/content.jar"/>
@@ -250,11 +283,14 @@
 								<delete file="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/content.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/artifacts.jar"/>
 								<delete file="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/content.jar"/>
+								<delete file="${project.build.directory}/org.polarsys.capella.resourceset.viewer/eclipse/artifacts.jar"/>
+								<delete file="${project.build.directory}/org.polarsys.capella.resourceset.viewer/eclipse/content.jar"/>
 								<delete includeemptydirs="true">
 									<fileset dir="${project.build.directory}/org.polarsys.capella.command.recorder/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.groovy/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.model2ecore/eclipse/features" includes="**/META-INF/**"/>
 									<fileset dir="${project.build.directory}/org.polarsys.capella.ocl.requester/eclipse/features" includes="**/META-INF/**"/>
+									<fileset dir="${project.build.directory}/org.polarsys.capella.resourceset.viewer/eclipse/features" includes="**/META-INF/**"/>
 								</delete>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.command.recorder"
 									destfile="${project.build.directory}/org.polarsys.capella.command.recorder-dropins-${qualifiedVersion}.zip"/>
@@ -264,6 +300,8 @@
 									destfile="${project.build.directory}/org.polarsys.capella.model2ecore-dropins-${qualifiedVersion}.zip"/>
 								<zip basedir="${project.build.directory}/org.polarsys.capella.ocl.requester"
 									destfile="${project.build.directory}/org.polarsys.capella.ocl.requester-dropins-${qualifiedVersion}.zip"/>
+								<zip basedir="${project.build.directory}/org.polarsys.capella.resourceset.viewer"
+									destfile="${project.build.directory}/org.polarsys.capella.resourceset.viewer-dropins-${qualifiedVersion}.zip"/>
 								<move file="${project.build.directory}/org.polarsys.capella.tools.site-${project.version}.zip"
 									tofile="${project.build.directory}/org.polarsys.capella.tools-updatesite-${qualifiedVersion}.zip"/>
 							</target>
