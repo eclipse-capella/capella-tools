@@ -34,4 +34,9 @@ public interface IImageKeys {
    */
   public final static String IMG_FILTER_RESOURCE = "filter.gif"; //$NON-NLS-1$
 
+  /**
+   * Status bar information image id.
+   */
+  public final static String IMG_STATUS_INFORMATION = "status.png"; //$NON-NLS-1$
+
 }

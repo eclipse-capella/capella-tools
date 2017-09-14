@@ -21,19 +21,4 @@
             id="org.polarsys.capella.resourceset.viewer.ResourceSetViewer">
       </view>
    </extension>
-   <extension
-     point="org.eclipse.ui.menus">
-      <menuContribution
-          allPopups="false"
-          locationURI="toolbar:org.eclipse.ui.trim.status">
-         <toolbar
-            id="org.polarsys.capella.resourceset.viewer.ResourceSetMonitor.toolbar"
-            label="%toolbarLabel">
-            <control
-              class="org.polarsys.capella.resourceset.viewer.ResourceSetMonitor"
-              id="org.polarsys.capella.resourceset.viewer.ResourceSetMonitor.control">
-            </control>
-         </toolbar>
-      </menuContribution>
-   </extension>
 </plugin>

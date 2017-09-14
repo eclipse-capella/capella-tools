@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.ui.action.ViewerFilterAction;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,11 +29,15 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -58,6 +63,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.polarsys.capella.common.ef.ExecutionManager;
 import org.polarsys.capella.common.ef.command.AbstractReadWriteCommand;
 import org.polarsys.capella.common.helpers.TransactionHelper;
+import org.polarsys.capella.core.model.handler.command.CapellaResourceHelper;
 import org.polarsys.capella.core.model.handler.provider.CapellaAdapterFactoryProvider;
 
 /**
@@ -88,6 +94,15 @@ public class ResourceSetViewer extends ViewPart {
     viewer.setContentProvider(new AdapterFactoryContentProvider(CapellaAdapterFactoryProvider.getInstance().getAdapterFactory()));
     viewer.setLabelProvider(new AdapterFactoryLabelProvider(CapellaAdapterFactoryProvider.getInstance().getAdapterFactory()));
     viewer.setInput(getViewSite());
+    viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+      /**
+       * {@inheritDoc}
+       */
+      @Override
+      public void selectionChanged(SelectionChangedEvent event) {
+        updateStatusBar(event.getSelection());
+      }
+    });
 
     activateListeningToPageSelectionEvents();
 
@@ -96,6 +111,48 @@ public class ResourceSetViewer extends ViewPart {
     makeActions();
     hookContextMenu();
     contributeToActionBars();
+  }
+
+  /**
+   * Displays information on the given element in the status bar.
+   * @param selection
+   */
+  public void updateStatusBar(ISelection selection) {
+      IStatusLineManager mgr = getViewSite().getActionBars().getStatusLineManager();
+      if (mgr != null) {
+          if (selection instanceof ITreeSelection) {
+              Object selectedElement = ((ITreeSelection) selection).getFirstElement();
+              if (selectedElement instanceof Resource) {
+                  int gmfElements = 0;
+                  int siriusElements = 0;
+                  int semanticElements = 0;
+                  int otherElements = 0;
+                  TreeIterator<EObject> it = ((Resource) selectedElement).getAllContents();
+                  while (it.hasNext()) {
+                      EObject obj = it.next();
+                      if (obj.eClass().getEPackage().getNsURI().startsWith("http://www.polarsys.org/capella")) {
+                          semanticElements++;
+                      } else if (obj.eClass().getEPackage().getNsURI().startsWith("http://www.eclipse.org/sirius")) {
+                          siriusElements++;
+                      } else if (obj.eClass().getEPackage().getNsURI().startsWith("http://www.eclipse.org/gmf")) {
+                          gmfElements++;
+                      } else {
+                          otherElements++;
+                      }
+                  }
+
+                  if (CapellaResourceHelper.isCapellaResource((Resource) selectedElement)) {
+                      mgr.setMessage(ResourceSetViewerPlugin.getDefault().getImage(IImageKeys.IMG_STATUS_INFORMATION), "Capella elements : " + Integer.toString(semanticElements) + " / Other EMF elements : " + Integer.toString(otherElements));
+                  } else if (CapellaResourceHelper.isAirdResource(((Resource) selectedElement).getURI())) {
+                      mgr.setMessage(ResourceSetViewerPlugin.getDefault().getImage(IImageKeys.IMG_STATUS_INFORMATION), "Sirius elements : " + Integer.toString(siriusElements) + " / GMF elements : " + Integer.toString(gmfElements) + " / Other EMF elements : " + Integer.toString(otherElements));
+                  } else {
+                      mgr.setMessage(ResourceSetViewerPlugin.getDefault().getImage(IImageKeys.IMG_STATUS_INFORMATION), "EMF elements : " + Integer.toString(otherElements));
+                  }
+              } else {
+                  mgr.setMessage(null);
+              }
+          }
+      }
   }
 
   private void makeActions() {
