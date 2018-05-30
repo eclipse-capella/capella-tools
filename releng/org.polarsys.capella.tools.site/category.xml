@@ -17,10 +17,10 @@
    <feature id="org.polarsys.capella.command.recorder.feature.source" version="1.2.0.qualifier">
       <category name="org.polarsys.capella.tools.command.recorder.category"/>
    </feature>
-   <feature id="org.polarsys.capella.groovy.feature" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.groovy.feature" version="1.2.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature id="org.polarsys.capella.groovy.feature.source" version="1.1.0.qualifier">
+   <feature id="org.polarsys.capella.groovy.feature.source" version="1.2.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
    <feature id="org.polarsys.capella.model2ecore.feature" version="1.1.0.qualifier">
