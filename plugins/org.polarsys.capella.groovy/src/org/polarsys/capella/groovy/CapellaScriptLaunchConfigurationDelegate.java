@@ -79,7 +79,7 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
           GroovyClassLoader loader = new GroovyClassLoader(getClass().getClassLoader()) {
             @Override
             protected CompilationUnit createCompilationUnit(CompilerConfiguration config, CodeSource source) {
-              return new CompilationUnit(config, source, this, transformLoader, true, null, null);
+              return new CompilationUnit(config, source, this, transformLoader, true, null);
             }
           };
 
