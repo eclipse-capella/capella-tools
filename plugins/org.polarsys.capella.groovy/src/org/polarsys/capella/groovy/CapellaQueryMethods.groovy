@@ -30,8 +30,6 @@ import org.polarsys.capella.core.model.helpers.registry.CapellaPackageRegistry
 
 import com.google.common.collect.Iterators
 
-import groovy.swing.factory.CellEditorGetValueFactory
-
 class CapellaQueryMethods {
 
   TransactionalEditingDomain domain
