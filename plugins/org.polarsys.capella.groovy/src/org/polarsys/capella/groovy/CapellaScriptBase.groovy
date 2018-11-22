@@ -41,8 +41,11 @@ public abstract class CapellaScriptBase extends Script {
 
   private final static CapellaQueryMethods __queryMethods = new CapellaQueryMethods()
   private final static DiagramMethods __diagramMethods = new DiagramMethods()
+  private final static EObjectQueryMethods __eobjectQueryMethods = new EObjectQueryMethods()
+
   private final static Logger __logger = ReportManagerRegistry.instance.subscribe IReportManagerDefaultComponents.DEFAULT
 
+  
   void log(object, level) {
     if (object != null){
       String label

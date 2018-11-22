@@ -54,7 +54,7 @@ class CapellaQueryMethods {
         }
       }
     }
-
+    
     /*
      * Adds setPropertyValue and getPropertyValue methods 
      */

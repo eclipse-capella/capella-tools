@@ -75,6 +75,7 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
   info LogicalFunction.find ({ it.name =~ /Ground/ })
 
 
+
   /* 
    * We can also write to the model. This snippet will capitalize 
    * all root function names. Note that after the script completes, you
@@ -104,5 +105,29 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
             .each {
                 it.export("In-Flight Entertainment System/${it.name}.jpg")
             }
+
+            
+  /*
+   * The find() function gets the first element of the specified type.
+   * This is useful especially if there is only one element of a given
+   * type in the model, such as the PhysicalArchitecture, LogicalArchitecture
+   * etc.
+   */
+  LogicalArchitecture la = LogicalArchitecture.find()
+  PhysicalArchitecture pa = PhysicalArchitecture.find()
+
+  /*
+   * The descendants function gives an iterator over
+   * all the descendants of an EObject.
+   * 
+   * Then you can for example use grep()
+   * with the name of a capella type to
+   * find all objects of that type:
+   * 
+   * This finds all Exchange Items in the Logical Architecture:
+   */
+  la.descendants().grep(ExchangeItem).each {
+    info it
+  }
 
 }

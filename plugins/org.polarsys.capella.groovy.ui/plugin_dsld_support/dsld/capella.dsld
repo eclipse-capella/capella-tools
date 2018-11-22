@@ -43,3 +43,8 @@ currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase")).accept {
   provider = "Capella-Groovy"
   property name:"args", type: String[], isStatic:false, doc:"A String[] that contains the script arguments"
 }
+
+currentType(subType("org.eclipse.emf.ecore.EObject")).accept {
+  provider = "Capella-Groovy"
+  method name:"descendants", type: "org.eclipse.emf.common.util.TreeIterator", doc: "Use instead of eAllContents() to make each/grep/etc. work"
+}
