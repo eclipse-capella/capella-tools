@@ -14,7 +14,7 @@ include "http://git.polarsys.org/c/capella/capella.git/plain/releng/plugins/org.
 
 with source, requirements
 
-location capella-1.2.x "http://download.polarsys.org/capella/core/updates/stable/1.2.1-S20180523-113154/org.polarsys.capella.rcp.site" {
+location capella-1.2.x "http://download.polarsys.org/capella/core/updates/releases/1.2.1-R20180601-102021/org.polarsys.capella.rcp.site" {
 	org.polarsys.capella.rcp.feature.feature.group
 }
 
