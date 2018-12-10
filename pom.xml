@@ -28,7 +28,7 @@
 		<tycho-version>1.0.0</tycho-version>
 		<tycho-extras-version>1.0.0</tycho-extras-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-repo-url>http://download.eclipse.org/releases/mars</eclipse-repo-url>
+		<eclipse-repo-url>http://download.eclipse.org/releases/photon</eclipse-repo-url>
 	</properties>
 
 	<!--dependencies>
