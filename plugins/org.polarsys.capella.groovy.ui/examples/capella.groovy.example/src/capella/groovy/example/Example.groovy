@@ -5,6 +5,8 @@ import org.polarsys.capella.core.data.ctx.*
 import org.polarsys.capella.core.data.fa.*
 import org.polarsys.capella.core.data.la.*
 import org.polarsys.capella.core.data.pa.*
+import org.polarsys.capella.core.data.information.*
+
 import groovy.transform.BaseScript
 
 // We can send messages to the information view with the log function:
