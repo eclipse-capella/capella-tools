@@ -37,9 +37,9 @@ model('/In-Flight Entertainment System/In-Flight Entertainment System.aird') {
   }
 
   /*
-   * List name/id pairs for every actor in the model
+   * List name/id pairs for every logical component in the model
    */
-  Actor.each {
+  LogicalComponent.each {
     info "$it.name $it.id"
   }
 

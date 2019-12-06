@@ -83,4 +83,12 @@
       id="CAPELLA_GROOVY_DSL_SUPPORT"
       class="org.polarsys.capella.groovy.ui.CapellaGroovyDSLSupport"/>
 </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="org.polarsys.capella.groovy.capellaScript"
+            icon="icons/MDK16x16.gif"
+            id="org.polarsys.capella.groovy.capellaScript">
+      </launchConfigurationTypeImage>
+   </extension>
 </plugin>

@@ -68,7 +68,7 @@ public final class CapellaScriptArgumentsTab extends AbstractLaunchConfiguration
     group.setLayout(layout);
     group.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-    String controlName = ("CapellaScript arguments");
+    String controlName = ("Script Arguments");
     group.setText(controlName);
 
     prgmArgumentsText = new Text(group, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
@@ -179,7 +179,7 @@ public final class CapellaScriptArgumentsTab extends AbstractLaunchConfiguration
    * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
    */
   public String getName() {
-    return "CapellaScript arguments:";
+    return "Script Arguments";
   }
 
   /**

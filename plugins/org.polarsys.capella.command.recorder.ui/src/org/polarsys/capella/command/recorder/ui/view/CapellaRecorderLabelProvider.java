@@ -13,18 +13,15 @@ package org.polarsys.capella.command.recorder.ui.view;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.polarsys.capella.command.recorder.core.manager.utils.NotificationEnum;
 import org.polarsys.capella.command.recorder.core.manager.utils.OperationEnum;
 import org.polarsys.capella.command.recorder.core.writer.DummyTreeData;
-import org.polarsys.capella.common.ui.services.helper.EObjectImageProviderHelper;
+import org.polarsys.capella.common.helpers.EObjectLabelProviderHelper;
 import org.polarsys.capella.common.mdsofa.common.constant.ICommonConstants;
-import org.polarsys.capella.common.helpers.TransactionHelper;
 
 /**
  */
@@ -117,28 +114,10 @@ public class CapellaRecorderLabelProvider implements ITableLabelProvider {
    * @return <code>null</code> if not found.
    */
   private static Image getImage(EObject eObject) {
-    Image result = EObjectImageProviderHelper.getImage(eObject);
-    if (null == result) {
-      ItemProviderAdapter itemProvider = getItemProvider(eObject);
-      if (null != itemProvider) {
-        result = EObjectImageProviderHelper.getImageFromObject(itemProvider.getImage(eObject));
-        itemProvider.dispose();
-      }
-    }
-
-    return result;
+    Object result = EObjectLabelProviderHelper.getImage(eObject);
+    return ExtendedImageRegistry.getInstance().getImage(result);
   }
-
-  /**
-   * Get a generic item provider.
-   * @return an {@link ItemProviderAdapter} if any.
-   */
-  private static ItemProviderAdapter getItemProvider(EObject object) {
-    AdapterFactoryEditingDomain editingDomain = (AdapterFactoryEditingDomain) TransactionHelper.getEditingDomain(object);
-    IItemLabelProvider provider = (IItemLabelProvider) editingDomain.getAdapterFactory().adapt(object, IItemLabelProvider.class);
-    return (ItemProviderAdapter) provider;
-  }
-
+  
   /**
    * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
    */
