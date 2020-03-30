@@ -49,8 +49,9 @@ public class CapellaGroovyTemplate extends NewPluginTemplateWizard {
         project.setDescription(description, monitor);
 
         IJavaProject javaProject = JavaCore.create(project);
-        GroovyRuntime.addLibraryToClasspath(javaProject, CapellaGroovyDSLSupport.CONTAINER_PATH, false);
-        GroovyRuntime.addLibraryToClasspath(javaProject, GroovyDSLCoreActivator.CLASSPATH_CONTAINER_ID, false);
+
+        GroovyRuntime.appendClasspathEntry(javaProject, JavaCore.newContainerEntry(CapellaGroovyDSLSupport.CONTAINER_PATH));
+        GroovyRuntime.appendClasspathEntry(javaProject, JavaCore.newContainerEntry(GroovyDSLCoreActivator.CLASSPATH_CONTAINER_ID));
 
       } catch (CoreException e) {
         CapellaGroovyUIPlugin.getInstance().getLog().log(new Status(e.getStatus().getSeverity(), CapellaGroovyUIPlugin.PLUGIN_ID, e.getStatus().getMessage(), e.getStatus().getException()));
@@ -58,6 +59,7 @@ public class CapellaGroovyTemplate extends NewPluginTemplateWizard {
     }
     return result;
   }
+
 
   @Override
   public ITemplateSection[] createTemplateSections() {
