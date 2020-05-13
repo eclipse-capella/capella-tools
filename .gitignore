@@ -74,3 +74,6 @@ $RECYCLE.BIN/
 
 # Maven
 target/
+
+#EMacs
+*~

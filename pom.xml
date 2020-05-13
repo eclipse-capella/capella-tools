@@ -15,112 +15,26 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.polarsys</groupId>
 	<artifactId>org.polarsys.capella.tools</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+	<parent>
+	  <groupId>org.polarsys</groupId>
+	  <artifactId>capella-addon</artifactId>
+	  <relativePath>releng/capella-releng-parent/capella-addon.xml</relativePath>
+	  <version>1.5.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+	  <target-definition-artifactId>capella-tools-target</target-definition-artifactId>
+	  <tycho.scmUrl>scm:git:https://github.com/eclipse/capella-tools.git</tycho.scmUrl>
+	</properties>
+
+	
 	<modules>
 		<module>features</module>
 		<module>plugins</module>
 		<module>releng/org.polarsys.capella.tools.site</module>
 	</modules>
 
-	<properties>
-		<tycho-version>1.0.0</tycho-version>
-		<tycho-extras-version>1.0.0</tycho-extras-version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-repo-url>http://download.eclipse.org/releases/photon</eclipse-repo-url>
-	</properties>
-
-	<!--dependencies>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.3.7</version>
-		</dependency>
-	</dependencies--> 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<target>
-						<artifact>
-							<groupId>org.polarsys</groupId>
-							<artifactId>org.polarsys.capella.tools</artifactId>
-							<version>1.4.0-SNAPSHOT</version>
-							<classifier>releng/org.polarsys.capella.tools.target/capella.target-definition</classifier>
-						</artifact>
-					</target>
-					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
-			<!-- enable source feature generation -->
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-source-feature-plugin</artifactId>
-				<version>${tycho-extras-version}</version>
-				<executions>
-					<execution>
-						<id>source-feature</id>
-						<phase>package</phase>
-						<goals>
-							<goal>source-feature</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- enable source bundle generation -->
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<executions>
-					<execution>
-						<id>plugin-source</id>
-						<goals>
-							<goal>plugin-source</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-p2-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<executions>
-					<execution>
-						<id>attached-p2-metadata</id>
-						<phase>package</phase>
-						<goals>
-							<goal>p2-metadata</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+	
 </project>
