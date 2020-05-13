@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2017 THALES GLOBAL SERVICES.
+ * Copyright (c) 2019 THALES GLOBAL SERVICES.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,15 +10,11 @@
  *******************************************************************************/
 target "CapellaTools"
 
-include "http://git.polarsys.org/c/capella/capella.git/plain/releng/plugins/org.polarsys.capella.targets/full/capella.target-definition.targetplatform?h=master"
+include "../capella-releng-parent/tp/capella-default-addon-target/capella-default-addon-target.targetplatform"
 
 with source, requirements
 
-location capella-master "http://download.polarsys.org/capella/core/updates/nightly/master/org.polarsys.capella.rcp.site" {
-	org.polarsys.capella.rcp.feature.feature.group
-}
-
-location groovy-eclipse "https://dist.springsource.org/release/GRECLIPSE/3.5.0/e4.12" {
+location groovy-eclipse "https://dist.springsource.org/release/GRECLIPSE/e4.12" {
 	org.codehaus.groovy.eclipse.feature.feature.group
 	org.codehaus.groovy25.feature.feature.group
 	org.codehaus.groovy.jdt.patch.feature.group

@@ -13,81 +13,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.polarsys.capella.releng</groupId>
-	<artifactId>capella.target-definition</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<groupId>org.polarsys</groupId>
+	<artifactId>capella-tools-target</artifactId>
 
-	<licenses>
-		<license>
-			<name>Eclipse Public License v1.0</name>
-			<comments>
-				All rights reserved.
+	<parent>
+	  <groupId>org.polarsys</groupId>
+	  <artifactId>capella-target-generator</artifactId>
+	  <version>1.4.1-SNAPSHOT</version>
+	  <relativePath>../capella-releng-parent/tp/capella-target-generator.xml</relativePath>
+	</parent>
+	<packaging>eclipse-target-definition</packaging>
 
-				This program and the accompanying materials are made
-				available under the terms of the Eclipse Public License v1.0
-				which accompanies this distribution, and is available at
-				http://www.eclipse.org/legal/epl-v10.htm
-			</comments>
-		</license>
-	</licenses>
-
-	<properties>
-		<tycho-version>1.0.0</tycho-version>
-		<tycho-extras-version>1.0.0</tycho-extras-version>
-		<platform-name>photon</platform-name>
-		<targetPlatform.repository>https://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/</targetPlatform.repository>
-		<targetPlatform.name>capella.target-definition.targetplatform</targetPlatform.name>
-		<converterApplication.name>org.eclipse.cbi.targetplatform.tpd.converter</converterApplication.name>
-	</properties>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho.extras</groupId>
-				<artifactId>tycho-eclipserun-plugin</artifactId>
-				<version>${tycho-extras-version}</version>
-				<configuration>
-					<repositories>
-						<repository>
-							<id>${platform-name}</id>
-							<layout>p2</layout>
-							<url>http://download.eclipse.org/releases/${platform-name}</url>
-						</repository>
-						<repository>
-							<id>targetplatform</id>
-							<layout>p2</layout>
-							<url>${targetPlatform.repository}</url>
-						</repository>
-					</repositories>
-					<!-- Set dependencies to launch the application -->
-					<dependencies>
-						<dependency>
-							<artifactId>org.eclipse.cbi.targetplatform-feature</artifactId>
-							<type>eclipse-feature</type>
-						</dependency>
-						<dependency>
-							<artifactId>org.eclipse.equinox.p2.sdk</artifactId>
-							<type>eclipse-feature</type>
-						</dependency>
-					</dependencies>
-					<executionEnvironment>JavaSE-1.8</executionEnvironment>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate.target</id>
-						<phase>validate</phase>
-						<configuration>
-							<applicationsArgs>
-								<args>-application ${converterApplication.name} ${targetPlatform.name}</args>
-							</applicationsArgs>
-						</configuration>
-						<goals>
-							<goal>eclipse-run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
