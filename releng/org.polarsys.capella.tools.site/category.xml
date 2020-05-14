@@ -78,5 +78,5 @@
    </category-def>
 
    <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
-   <repository-reference location="https://dist.springsource.org/release/GRECLIPSE/3.5.0/e4.12" enabled="true" />
+   <repository-reference location="https://dist.springsource.org/release/GRECLIPSE/e4.12" enabled="true" />
 </site>
