@@ -19,7 +19,7 @@
 	<parent>
 	  <groupId>org.polarsys</groupId>
 	  <artifactId>capella-target-generator</artifactId>
-	  <version>1.5.0-SNAPSHOT</version>
+	  <version>5.0.0-SNAPSHOT</version>
 	  <relativePath>../capella-releng-parent/tp/capella-target-generator.xml</relativePath>
 	</parent>
 	<packaging>eclipse-target-definition</packaging>
