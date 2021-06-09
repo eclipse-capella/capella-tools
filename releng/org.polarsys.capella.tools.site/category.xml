@@ -20,19 +20,10 @@
    <feature id="org.polarsys.capella.model2ecore.feature" version="1.4.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature id="org.polarsys.capella.model2ecore.feature.source" version="1.4.0.qualifier">
-      <category name="org.polarsys.capella.tools.model2ecore.category"/>
-   </feature>
    <feature id="org.polarsys.capella.ocl.requester.feature" version="1.4.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
-   <feature id="org.polarsys.capella.ocl.requester.feature.source" version="1.4.0.qualifier">
-      <category name="org.polarsys.capella.tools.ocl.requester.category"/>
-   </feature>
    <feature id="org.polarsys.capella.resourceset.viewer.feature" version="1.4.0.qualifier">
-      <category name="org.polarsys.capella.resourceset.viewer.category"/>
-   </feature>
-   <feature id="org.polarsys.capella.resourceset.viewer.feature.source" version="1.4.0.qualifier">
       <category name="org.polarsys.capella.resourceset.viewer.category"/>
    </feature>
    <category-def name="org.polarsys.capella.tools.category" label="Capella Tools">
