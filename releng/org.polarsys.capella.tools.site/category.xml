@@ -14,13 +14,7 @@
    <feature id="org.polarsys.capella.command.recorder.feature" version="1.4.0.qualifier">
       <category name="org.polarsys.capella.tools.command.recorder.category"/>
    </feature>
-   <feature id="org.polarsys.capella.command.recorder.feature.source" version="1.4.0.qualifier">
-      <category name="org.polarsys.capella.tools.command.recorder.category"/>
-   </feature>
-   <feature id="org.polarsys.capella.groovy.feature" version="1.4.0.qualifier">
-      <category name="org.polarsys.capella.tools.groovy.category"/>
-   </feature>
-   <feature id="org.polarsys.capella.groovy.feature.source" version="1.4.0.qualifier">
+   <feature id="org.polarsys.capella.groovy.feature" version="5.0.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
    <feature id="org.polarsys.capella.model2ecore.feature" version="1.4.0.qualifier">
@@ -78,5 +72,5 @@
    </category-def>
 
    <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
-   <repository-reference location="https://dist.springsource.org/release/GRECLIPSE/e4.12" enabled="true" />
+   <repository-reference location="https://dist.springsource.org/release/GRECLIPSE/e4.16" enabled="true" />
 </site>
