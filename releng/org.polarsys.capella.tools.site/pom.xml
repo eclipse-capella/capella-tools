@@ -20,7 +20,11 @@
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>capella-tools-site</artifactId>
+	<artifactId>org.polarsys.capella.tools.site</artifactId>
 	<packaging>eclipse-repository</packaging>
+
+	<properties>
+	  <packagedSiteName>capella-tools</packagedSiteName>
+	</properties>
 
 </project> 
