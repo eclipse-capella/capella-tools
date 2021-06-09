@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.variables,
  org.polarsys.capella.common.ui.services,
  org.polarsys.capella.core.platform.sirius.ui.navigator,
  org.polarsys.capella.core.preferences
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.polarsys.capella.command.recorder.ui,
  org.polarsys.capella.command.recorder.ui.actions,
