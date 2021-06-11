@@ -16,6 +16,6 @@ with source, requirements
 
 location groovy-eclipse "https://dist.springsource.org/release/GRECLIPSE/e4.16" {
 	org.codehaus.groovy.eclipse.feature.feature.group
-	org.codehaus.groovy25.feature.feature.group
+	org.codehaus.groovy30.feature.feature.group
 	org.codehaus.groovy.jdt.patch.feature.group
 }
