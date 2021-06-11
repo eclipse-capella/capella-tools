@@ -8,7 +8,7 @@ Bundle-Vendor: %providerName
 Require-Bundle: org.polarsys.capella.core.platform.sirius.ui.navigator,
  org.polarsys.capella.common.ui,
  org.polarsys.capella.core.preferences
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.polarsys.capella.model2ecore,
  org.polarsys.capella.model2ecore.actions,
