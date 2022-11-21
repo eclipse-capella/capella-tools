@@ -1,0 +1,18 @@
+{
+  "name": "user-manual-toc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/eclipse/capella-tools.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "EPL",
+  "dependencies": {
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {}
+}
