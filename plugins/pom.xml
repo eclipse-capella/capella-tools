@@ -27,6 +27,7 @@
 		<module>org.polarsys.capella.command.recorder.ui</module>
 		<module>org.polarsys.capella.groovy</module>
 		<module>org.polarsys.capella.groovy.ui</module>
+		<module>org.polarsys.capella.groovy.ju</module>
 		<module>org.polarsys.capella.model2ecore</module>
 		<module>org.polarsys.capella.ocl.requester</module>
 		<module>org.polarsys.capella.resourceset.viewer</module>

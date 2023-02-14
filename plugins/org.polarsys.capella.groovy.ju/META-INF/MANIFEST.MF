@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: org.polarsys.capella.groovy.ju
+Bundle-Version: 6.0.0.qualifier
+Automatic-Module-Name: org.polarsys.capella.groovy.ju
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.polarsys.capella.groovy;bundle-version="6.0.0",
+ org.polarsys.capella.groovy.ui;bundle-version="6.0.0",
+ org.junit;bundle-version="4.13.0",
+ org.codehaus.groovy,
+ org.polarsys.capella.core.model.handler;bundle-version="6.1.0",
+ org.polarsys.capella.core.model.helpers;bundle-version="6.1.0"
