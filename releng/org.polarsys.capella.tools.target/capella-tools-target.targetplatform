@@ -14,7 +14,7 @@ include "../capella-releng-parent/tp/capella-default-addon-target/capella-defaul
 
 with source, requirements
 
-location groovy-eclipse "https://dist.springsource.org/release/GRECLIPSE/e4.16" {
+location groovy-eclipse "https://groovy.jfrog.io/artifactory/plugins-release-local/org/codehaus/groovy/groovy-eclipse-integration/3.8.0/e4.16/" {
 	org.codehaus.groovy.eclipse.feature.feature.group
 	org.codehaus.groovy30.feature.feature.group
 	org.codehaus.groovy.jdt.patch.feature.group
