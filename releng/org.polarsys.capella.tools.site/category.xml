@@ -11,19 +11,19 @@
        Felix Dorner - add repository reference for Groovy-Eclipse
 -->
 <site>
-   <feature id="org.polarsys.capella.command.recorder.feature" version="5.0.0.qualifier">
+   <feature id="org.polarsys.capella.command.recorder.feature" version="6.0.0.qualifier">
       <category name="org.polarsys.capella.tools.command.recorder.category"/>
    </feature>
-   <feature id="org.polarsys.capella.groovy.feature" version="5.0.0.qualifier">
+   <feature id="org.polarsys.capella.groovy.feature" version="6.0.0.qualifier">
       <category name="org.polarsys.capella.tools.groovy.category"/>
    </feature>
-   <feature id="org.polarsys.capella.model2ecore.feature" version="5.0.0.qualifier">
+   <feature id="org.polarsys.capella.model2ecore.feature" version="6.0.0.qualifier">
       <category name="org.polarsys.capella.tools.model2ecore.category"/>
    </feature>
-   <feature id="org.polarsys.capella.ocl.requester.feature" version="5.0.0.qualifier">
+   <feature id="org.polarsys.capella.ocl.requester.feature" version="6.0.0.qualifier">
       <category name="org.polarsys.capella.tools.ocl.requester.category"/>
    </feature>
-   <feature id="org.polarsys.capella.resourceset.viewer.feature" version="5.0.0.qualifier">
+   <feature id="org.polarsys.capella.resourceset.viewer.feature" version="6.0.0.qualifier">
       <category name="org.polarsys.capella.resourceset.viewer.category"/>
    </feature>
    <category-def name="org.polarsys.capella.tools.category" label="Capella Tools">
