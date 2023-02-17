@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.IClasspathContainer;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.polarsys.capella.groovy.CapellaGroovyPlugin;
 
 public class CapellaGroovyDSLSupport extends ClasspathContainerInitializer {
 
@@ -64,7 +65,7 @@ public class CapellaGroovyDSLSupport extends ClasspathContainerInitializer {
         }
         List<IClasspathEntry> newEntries = new ArrayList<IClasspathEntry>();
         try {
-          Enumeration<URL> enu = CapellaGroovyUIPlugin.getInstance().getBundle().findEntries(".", "plugin_dsld_support", false);
+          Enumeration<URL> enu = CapellaGroovyPlugin.getInstance().getBundle().findEntries("", "plugin_dsld_support", false);
           if (enu != null && enu.hasMoreElements()) {
             IPath folder = new Path(FileLocator.toFileURL(enu.nextElement()).getPath());
             if (folder != null) {
