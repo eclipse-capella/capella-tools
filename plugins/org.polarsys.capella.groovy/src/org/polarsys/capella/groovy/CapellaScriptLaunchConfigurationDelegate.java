@@ -14,14 +14,17 @@ package org.polarsys.capella.groovy;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import org.codehaus.groovy.control.CompilationUnit;
 import org.codehaus.groovy.control.CompilerConfiguration;
 import org.codehaus.groovy.runtime.InvokerHelper;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -38,6 +41,9 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
+import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.internal.core.PDECore;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
 
@@ -47,7 +53,6 @@ import groovy.lang.GroovyCodeSource;
 public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
 
   public Class<?> loadClass(IFile capellaScriptFile) throws CoreException {
-
     Collection<URL> urls = new ArrayList<URL>();
 
     // Locate jars on the script project's build path and add them to the classloader
@@ -65,9 +70,31 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
     }
 
     try {
+      HashMap<IProject, Bundle> bs = new HashMap<>();
+
       Bundle groovy = Platform.getBundle("org.codehaus.groovy");
-      final GroovyClassLoader transformLoader = new GroovyClassLoader(groovy.adapt(BundleWiring.class).getClassLoader());
-      GroovyClassLoader loader = new GroovyClassLoader(getClass().getClassLoader()) {
+      String REFERENCE_URI_PREFIX = "reference:"; //$NON-NLS-1$
+      for (IPluginModelBase model : PDECore.getDefault().getModelManager().getWorkspaceModels()) {
+        URL url = model.getUnderlyingResource().getProject().getLocationURI().toURL();
+        final String candidateLocationReference = REFERENCE_URI_PREFIX
+            + URLDecoder.decode(url.toExternalForm(), System.getProperty("file.encoding")); //$NON-NLS-1$
+
+        Bundle b2 = CapellaGroovyPlugin.getInstance().getBundle().getBundleContext()
+            .installBundle(candidateLocationReference);
+        bs.put(model.getUnderlyingResource().getProject(), b2);
+        for (BundleSpecification spec : model.getBundleDescription().getRequiredBundles()) {
+          Platform.getBundle(spec.getName());
+        }
+      }
+
+      Bundle bp = bs.get(capellaScriptFile.getProject());
+      bp.start();
+      ClassLoader cls = bp.adapt(BundleWiring.class).getClassLoader();
+
+      final GroovyClassLoader transformLoader = new GroovyClassLoader(
+          groovy.adapt(BundleWiring.class).getClassLoader());
+      GroovyClassLoader loader = new GroovyClassLoader(cls) {
+
         @Override
         protected CompilationUnit createCompilationUnit(CompilerConfiguration config, CodeSource source) {
           return new CompilationUnit(config, source, this, transformLoader, true, null);
