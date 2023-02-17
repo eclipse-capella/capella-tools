@@ -30,7 +30,6 @@
 	  <build.helper.maven.plugin.version>3.3.0</build.helper.maven.plugin.version>
 	  <maven.compiler.version>3.8.1</maven.compiler.version>
 	  <groovy.eclipse.compiler.version>3.8.0</groovy.eclipse.compiler.version>
-	  
 	  <!-- below shall be consistent with the groovy available in the target platform -->
 	  <groovy.eclipse.batch.version>4.0.7-02</groovy.eclipse.batch.version>
 	  <maven.compiler.source>11</maven.compiler.source>

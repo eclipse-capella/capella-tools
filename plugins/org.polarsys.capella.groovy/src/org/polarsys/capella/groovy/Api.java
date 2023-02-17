@@ -39,7 +39,12 @@ import org.polarsys.capella.common.helpers.TransactionHelper;
 import org.polarsys.capella.common.tools.report.EmbeddedMessage;
 import org.polarsys.capella.common.tools.report.config.registry.ReportManagerRegistry;
 import org.polarsys.capella.common.tools.report.util.IReportManagerDefaultComponents;
+import org.polarsys.capella.common.ui.massactions.activator.MACapellaActivator;
+import org.polarsys.capella.common.ui.toolkit.browser.category.CategoryRegistry;
+import org.polarsys.capella.common.ui.toolkit.browser.category.ICategory;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.kitalpha.massactions.core.table.IMATable;
+import org.polarsys.kitalpha.massactions.shared.view.MAView;
 
 import groovy.lang.Closure;
 
@@ -113,6 +118,33 @@ public class Api {
   
 
   }
+  public static void createVisualizationTable(String name, Collection<EObject> selection, String ... ids) {
+
+    try {
+      IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
+          MACapellaActivator.MV_VIEW_ID, MACapellaActivator.SEND_TO_MV_VIEW_COMMAND_PARAMETER_SECONDARY_ID,
+          IWorkbenchPage.VIEW_VISIBLE);
+
+      MAView maView = (MAView) viewPart;
+      maView.setViewName(name);
+      maView.dataChanged(selection);
+      maView.getTable().applyColumnFilter(new ColumnFilter(ids));
+
+    } catch (PartInitException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  public static Collection<CategoryEntry> getCategories(EClass clazz) {
+    Collection<CategoryEntry> results = new ArrayList<CategoryEntry>();
+    if (clazz.isAbstract()) return results;
+    EObject root = clazz.getEPackage().getEFactoryInstance().create(clazz);
+    for (ICategory cat : CategoryRegistry.getInstance().gatherCategories(root)) {
+      results.add(new CategoryEntry(cat));
+    }
+    return results;
+  }
+
   public static void log(String toto, EObject toto2) {
     __logger.info(new EmbeddedMessage(toto, // $NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         IReportManagerDefaultComponents.MODEL, Arrays.asList(toto2)));

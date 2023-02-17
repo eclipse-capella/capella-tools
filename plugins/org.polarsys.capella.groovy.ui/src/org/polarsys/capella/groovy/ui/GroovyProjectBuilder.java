@@ -17,6 +17,9 @@ public class GroovyProjectBuilder extends IncrementalProjectBuilder {
     MenuUpdater menuUpdater = new MenuUpdater();
     menuUpdater.removeGroovyMenus();
     
+    SemanticQueryUpdater queryUpdater = new SemanticQueryUpdater();
+    queryUpdater.removeGroovyQueries();
+    
     HashSet<IProject> projects = new HashSet<>();
     for (IFile capellaScriptFile : ProjectHelper.getFiles()) {
       projects.add(capellaScriptFile.getProject());
@@ -24,6 +27,7 @@ public class GroovyProjectBuilder extends IncrementalProjectBuilder {
       try {
         Class<?> cl = new CapellaScriptLaunchConfigurationDelegate().loadClass(capellaScriptFile);
         menuUpdater.registrerMenus(capellaScriptFile, cl);
+        queryUpdater.createQueries(cl);
       } catch(Exception e) {
         e.printStackTrace();
       }
