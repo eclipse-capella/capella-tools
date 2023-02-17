@@ -44,7 +44,7 @@ public class CapellaGroovyDSLSupport extends ClasspathContainerInitializer {
     }
 
     public String getDescription() {
-        return "Capella Groovy DSL";
+        return "Groovy DSL Support Capella";
     }
 
     public IClasspathEntry[] getClasspathEntries() {

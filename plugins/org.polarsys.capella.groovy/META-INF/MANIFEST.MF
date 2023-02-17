@@ -21,4 +21,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Eclipse-BuddyPolicy: global
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
-Export-Package: org.polarsys.capella.groovy
+Export-Package: org.polarsys.capella.groovy,
+ org.polarsys.capella.groovy.lang

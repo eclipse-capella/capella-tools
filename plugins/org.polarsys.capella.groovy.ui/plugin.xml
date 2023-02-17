@@ -91,4 +91,52 @@
             id="org.polarsys.capella.groovy.capellaScript">
       </launchConfigurationTypeImage>
    </extension>
+    <extension
+          id="builder"
+          name="name"
+          point="org.eclipse.core.resources.builders">
+       <builder
+             callOnEmptyDelta="false"
+             isConfigurable="false"
+             supportsConfigurations="false">
+          <run 
+                class="org.polarsys.capella.groovy.ui.GroovyProjectBuilder">
+          </run>
+       </builder>
+    </extension>
+    
+    <extension point="org.eclipse.ui.menus">
+    
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=group.accelerator">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.accelerator" class="org.polarsys.capella.groovy.ui.MenuContributionItem$Accelerator" >
+         </dynamic>
+       </menuContribution>
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=group.wizard">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.wizard" class="org.polarsys.capella.groovy.ui.MenuContributionItem$Wizard" >
+         </dynamic>
+       </menuContribution>
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=group.semantic">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.semantic" class="org.polarsys.capella.groovy.ui.MenuContributionItem$Semantic" >
+         </dynamic>
+       </menuContribution>
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=group.showIn">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.showIn" class="org.polarsys.capella.groovy.ui.MenuContributionItem$ShowIn" >
+         </dynamic>
+       </menuContribution>
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=group.sendTo">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.sendTo" class="org.polarsys.capella.groovy.ui.MenuContributionItem$SendTo" >
+         </dynamic>
+       </menuContribution>
+       <menuContribution
+                locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <dynamic id="org.polarsys.capella.groovy.ui.MenuContributionItem.additions" class="org.polarsys.capella.groovy.ui.MenuContributionItem$Additions" >
+         </dynamic>
+       </menuContribution>
+       
+   </extension>
 </plugin>
