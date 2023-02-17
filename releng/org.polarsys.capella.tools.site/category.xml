@@ -63,5 +63,5 @@
    </category-def>
 
    <!-- Below is ignored by tycho, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=453708 -->
-   <repository-reference location="https://dist.springsource.org/release/GRECLIPSE/e4.16" enabled="true" />
+   <repository-reference location="https://groovy.jfrog.io/artifactory/plugins-release-local/org/codehaus/groovy/groovy-eclipse-integration/4.8.0/e4.20/" enabled="true" />
 </site>

@@ -8,7 +8,7 @@ Bundle-Vendor: %providerName
 Require-Bundle: org.eclipse.core.variables,
  org.polarsys.capella.core.preferences,
  org.polarsys.capella.core.data.gen
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: org.polarsys.capella.command.recorder,
  org.polarsys.capella.command.recorder.core.exception,

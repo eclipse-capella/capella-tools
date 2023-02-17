@@ -29,12 +29,6 @@
     	<capella-product-id>org.polarsys.capella.rcp.product</capella-product-id>
     	<capella-application>org.polarsys.capella.core.platform.sirius.ui.perspective.id</capella-application>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<build.helper.maven.plugin.version>1.8</build.helper.maven.plugin.version>
-		<maven.compiler.version>3.8.1</maven.compiler.version>
-		<groovy.eclipse.compiler.version>3.7.0</groovy.eclipse.compiler.version>
-		<groovy.eclipse.batch.version>3.0.8-01</groovy.eclipse.batch.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<artifactId>org.polarsys.capella.groovy.ju</artifactId>
