@@ -13,13 +13,13 @@
 // for editing groovy capella scripts
 
 
-currentType(subType("org.polarsys.capella.core.data.capellacore.CapellaElement")).accept {
+contribute(currentType(subType("org.polarsys.capella.core.data.capellacore.CapellaElement"))) {
     provider = "Capella-Groovy"
     method name:"getPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Get the property value named by key and returns its value"
     method name:"setPropertyValue", type:Object, isStatic:false, declaringType:currentType, doc:"Sets and possibly overwrites the property value with the given name to the given value. Returns the old value of the property, or null if the property didn't exist before"
 }
 
-currentType(subType("org.eclipse.sirius.diagram.DDiagram")).accept {
+contribute(currentType(subType("org.eclipse.sirius.diagram.DDiagram"))) {
     provider = "Capella-Groovy"
     method  name:"export", 
             params: [ path: String], 
@@ -32,19 +32,19 @@ currentType(subType("org.eclipse.sirius.diagram.DDiagram")).accept {
 }
 
 // inside the closure argument for model() all methods from TransactionDelegate are available:
-and(enclosingCallName("model"), currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase"))).accept {
+contribute(and(enclosingCallName("model"), currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase")))) {
 	provider = "Capella-Groovy"
   property name:"session", type: "org.eclipse.sirius.business.api.Session", doc: "The session associated to the active model"
   method name:"getDiagrams", type: "java.util.List<org.eclipse.sirius.diagram.DDiagram>", doc: "A list of all diagrams in the active model"
   method name:"getTables", type: "java.util.List<org.eclipse.sirius.table.metamodel.table.DTable>", doc: "A list of all tables in the active model"
 }
 
-currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase")).accept {
+contribute(currentType(subType("org.polarsys.capella.groovy.CapellaScriptBase"))) {
   provider = "Capella-Groovy"
   property name:"args", type: String[], isStatic:false, doc:"A String[] that contains the script arguments"
 }
 
-currentType(subType("org.eclipse.emf.ecore.EObject")).accept {
+contribute(currentType(subType("org.eclipse.emf.ecore.EObject"))) {
   provider = "Capella-Groovy"
   method name:"descendants", type: "org.eclipse.emf.common.util.TreeIterator", doc: "Use instead of eAllContents() to make each/grep/etc. work"
 }
