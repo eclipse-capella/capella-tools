@@ -180,7 +180,7 @@ var capellah = {
 		"http://www.polarsys.org/capella/common/activity/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.data.activity.gen/model/Activity.ecore",	
 		"http://www.polarsys.org/capella/common/behavior/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.data.behavior.gen/model/Behavior.ecore",	
 		"http://www.polarsys.org/capella/common/core/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.data.core.gen/model/ModellingCore.ecore",	
-		"ecore": "/kchobantonov/org.eclipse.emf/blob/master/plugins/org.eclipse.emf.ecore/model/Ecore.ecore"
+		"ecore": "/kchobantonov/org.eclipse.emf/master/plugins/org.eclipse.emf.ecore/model/Ecore.ecore"
 
 	}
 
@@ -322,6 +322,12 @@ function isDerived(s) {
 	let annotation = findAnnotation(s, "http://www.polarsys.org/capella/derived");
 	return annotation != null;
 }
+
+function isSemantic(s) {
+	let annotation = findAnnotation(s, "http://www.polarsys.org/capella/semantic");
+	return annotation != null;
+}
+
 function getValue(s, classes) {
 	let annotation = findAnnotation(s, "http://www.polarsys.org/capella/derived");
 	if (annotation) {
@@ -410,6 +416,13 @@ function getLineDoc(p) {
 	return "";
 }
 
+function getSemantic(s) {
+	if (isSemantic(s)) {
+		return "[![](https://raw.githubusercontent.com/eclipse-platform/eclipse.platform.images/master/org.eclipse.images/eclipse-png/org.eclipse.jdt.ui/icons/full/obj16/annotation_obj.png)](# \"semantic\")";
+	}
+	return "";
+}
+
 getAllPackages().then(pkgs => {
 	let classes = getClasses(pkgs);
 
@@ -433,6 +446,11 @@ getAllPackages().then(pkgs => {
 			}
 			fileContent += "\n";
 			fileContent += "\n";
+			if (isSemantic(c)) {
+				fileContent += getSemantic(c);
+				fileContent += "\n";
+				fileContent += "\n";
+			}
 			let doc3 = findAnnotation(c, 'http://www.polarsys.org/kitalpha/ecore/documentation', "source");
 			if (doc3) {
 				let doc4 = findDetails(doc3, 'description', "key");
@@ -484,7 +502,7 @@ getAllPackages().then(pkgs => {
 				fileContent += "|Attribute|Type|Range|Description|\n";
 				fileContent += "|--|--|--|--|\n";
 				attributes.forEach(s => {
-					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+getLineDoc(s)+"\n";
+					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getSemantic(s)].join(" ")+"\n";
 				});
 				fileContent += "\n";
 			}
@@ -493,7 +511,7 @@ getAllPackages().then(pkgs => {
 				fileContent += "|Reference|Type|Range|Description|\n";
 				fileContent += "|--|--|--|--|\n";
 				references.forEach(s => {
-					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getValue(s, classes)].join(" ")+"|"+"\n";
+					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getValue(s, classes), getSemantic(s)].join(" ")+"|"+"\n";
 				});
 				fileContent += "\n";
 			}
@@ -511,7 +529,7 @@ getAllPackages().then(pkgs => {
 				fileContent += "|Attribute|Type|Range|Description|\n";
 				fileContent += "|--|--|--|--|\n";
 				attributes.forEach(s => {
-					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+getLineDoc(s)+"|"+"\n";
+					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getSemantic(s)].join(" ")+"|"+"\n";
 				});
 				fileContent += "\n";
 			}
@@ -520,7 +538,7 @@ getAllPackages().then(pkgs => {
 				fileContent += "|Reference|Type|Range|Description|\n";
 				fileContent += "|--|--|--|--|\n";
 				references.forEach(s => {
-					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getValue(s, classes)].join(" ")+"|"+"\n";
+					fileContent += "|"+getStyledNameFeature(s)+"|"+getType(s, classes, true, true)+"|"+getCard(s)+"|"+[getLineDoc(s), getValue(s, classes), getSemantic(s)].join(" ")+"|"+"\n";
 				});
 				fileContent += "\n";
 			}
