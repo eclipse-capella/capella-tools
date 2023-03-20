@@ -13,27 +13,25 @@ import org.eclipse.emf.ecore.EObject;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
 
 public class ProjectHelper {
-  public static Collection<IFile> getFiles() {
-   final ArrayList<IFile> files = new ArrayList<>();
-    
-    for (IProject project: ResourcesPlugin.getWorkspace().getRoot().getProjects()) {
-      try {
-        if (project.isOpen()) {
+  public static Collection<IFile> getFiles(IProject project) {
+    final ArrayList<IFile> files = new ArrayList<>();
+
+    try {
+      if (project.isOpen()) {
         project.accept(new IResourceVisitor() {
-          
+
           @Override
           public boolean visit(IResource resource) throws CoreException {
-            if ("groovy".equals(resource.getFileExtension()) && resource instanceof IFile)  {
+            if ("groovy".equals(resource.getFileExtension()) && resource instanceof IFile) {
               files.add((IFile) resource);
             }
             return true;
           }
         });
-        }
-      } catch (CoreException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
       }
+    } catch (CoreException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     return files;
   }

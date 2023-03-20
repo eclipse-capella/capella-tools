@@ -11,14 +11,12 @@
  *******************************************************************************/
 package org.polarsys.capella.groovy;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.codehaus.groovy.control.CompilationUnit;
 import org.codehaus.groovy.control.CompilerConfiguration;
@@ -28,7 +26,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
@@ -41,7 +38,6 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.core.PDECore;
 import org.osgi.framework.Bundle;
@@ -52,45 +48,67 @@ import groovy.lang.GroovyCodeSource;
 
 public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
 
+  protected IPluginModelBase getModel(IProject project) {
+    for (IPluginModelBase model : PDECore.getDefault().getModelManager().getWorkspaceModels()) {
+      if (project.equals(model.getUnderlyingResource().getProject())) {
+        return model;
+      }
+    }
+    return null;
+  }
+
+  protected Bundle getBundle(IProject project) {
+    return Platform.getBundle(getModel(project).getBundleDescription().getName());
+  }
+
+  public void reloadBundle(IProject project) {
+    String REFERENCE_URI_PREFIX = "reference:"; //$NON-NLS-1$
+    IPluginModelBase model = getModel(project);
+
+    try {
+      URL url = model.getUnderlyingResource().getProject().getLocationURI().toURL();
+      final String candidateLocationReference = REFERENCE_URI_PREFIX
+          + URLDecoder.decode(url.toExternalForm(), System.getProperty("file.encoding")); //$NON-NLS-1$
+
+      Bundle b = CapellaGroovyPlugin.getInstance().getBundle().getBundleContext().getBundle(candidateLocationReference);
+      if (b != null) {
+        System.out.println("Uninstall bundle:" + b.getSymbolicName());
+        b.uninstall();
+      }
+
+      b = CapellaGroovyPlugin.getInstance().getBundle().getBundleContext().installBundle(candidateLocationReference);
+      b.start();
+      System.out.println("Start bundle:" + b.getSymbolicName());
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public Class<?> loadClass(IFile capellaScriptFile) throws CoreException {
     Collection<URL> urls = new ArrayList<URL>();
 
     // Locate jars on the script project's build path and add them to the classloader
-    if (capellaScriptFile.getProject().hasNature(JavaCore.NATURE_ID)){
+    if (capellaScriptFile.getProject().hasNature(JavaCore.NATURE_ID)) {
       IJavaProject project = JavaCore.create(capellaScriptFile.getProject());
-      for (IClasspathEntry entry : project.getRawClasspath()){
-        if (entry.getEntryKind() == IClasspathEntry.CPE_LIBRARY){
+      for (IClasspathEntry entry : project.getRawClasspath()) {
+        if (entry.getEntryKind() == IClasspathEntry.CPE_LIBRARY) {
           try {
             urls.add(ResourcesPlugin.getWorkspace().getRoot().getFile(entry.getPath()).getLocationURI().toURL());
           } catch (MalformedURLException e) {
-            CapellaGroovyPlugin.getInstance().getLog().log(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
+            CapellaGroovyPlugin.getInstance().getLog()
+                .log(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
           }
         }
       }
     }
 
     try {
-      HashMap<IProject, Bundle> bs = new HashMap<>();
 
-      Bundle groovy = Platform.getBundle("org.codehaus.groovy");
-      String REFERENCE_URI_PREFIX = "reference:"; //$NON-NLS-1$
-      for (IPluginModelBase model : PDECore.getDefault().getModelManager().getWorkspaceModels()) {
-        URL url = model.getUnderlyingResource().getProject().getLocationURI().toURL();
-        final String candidateLocationReference = REFERENCE_URI_PREFIX
-            + URLDecoder.decode(url.toExternalForm(), System.getProperty("file.encoding")); //$NON-NLS-1$
-
-        Bundle b2 = CapellaGroovyPlugin.getInstance().getBundle().getBundleContext()
-            .installBundle(candidateLocationReference);
-        bs.put(model.getUnderlyingResource().getProject(), b2);
-        for (BundleSpecification spec : model.getBundleDescription().getRequiredBundles()) {
-          Platform.getBundle(spec.getName());
-        }
-      }
-
-      Bundle bp = bs.get(capellaScriptFile.getProject());
-      bp.start();
+      Bundle bp = getBundle(capellaScriptFile.getProject());
       ClassLoader cls = bp.adapt(BundleWiring.class).getClassLoader();
 
+      Bundle groovy = Platform.getBundle("org.codehaus.groovy");
       final GroovyClassLoader transformLoader = new GroovyClassLoader(
           groovy.adapt(BundleWiring.class).getClassLoader());
       GroovyClassLoader loader = new GroovyClassLoader(cls) {
@@ -101,22 +119,22 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
         }
       };
 
-      for (URL u : urls){
+      for (URL u : urls) {
         loader.addURL(u);
       }
 
-      Class<?> cl = loader.parseClass(new GroovyCodeSource(capellaScriptFile.getLocation().toFile(), capellaScriptFile.getCharset()));
+      Class<?> cl = loader
+          .parseClass(new GroovyCodeSource(capellaScriptFile.getLocation().toFile(), capellaScriptFile.getCharset()));
       return cl;
-      
+
     } catch (CoreException e) {
       throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
     } catch (Exception e) {
       throw new CoreException(new Status(IStatus.ERROR, CapellaGroovyPlugin.PLUGIN_ID, e.getMessage(), e));
     }
   }
-  
 
-  public IStatus runScript(Class<?> groovyClass, String ... args) throws CoreException {
+  public IStatus runScript(Class<?> groovyClass, String... args) throws CoreException {
     try {
       InvokerHelper.runScript(groovyClass, args);
 
@@ -125,8 +143,7 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
     }
     return Status.OK_STATUS;
   }
-  
-  
+
   public void launch(final ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor)
       throws CoreException {
 
@@ -135,8 +152,10 @@ public final class CapellaScriptLaunchConfigurationDelegate implements ILaunchCo
       public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
         String location = configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_SCRIPT_LOCATION.name(),
             (String) null);
-        String[] args = DebugPlugin.parseArguments(configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), ""));
+        String[] args = DebugPlugin
+            .parseArguments(configuration.getAttribute(CapellaGroovyConstants.LAUNCH_ATTR_PROGRAM_ARGS.name(), ""));
         IFile capellaScriptFile = ResourcesPlugin.getWorkspace().getRoot().getFile(new Path(location));
+        reloadBundle(capellaScriptFile.getProject());
         return runScript(loadClass(capellaScriptFile), args);
       }
     };
