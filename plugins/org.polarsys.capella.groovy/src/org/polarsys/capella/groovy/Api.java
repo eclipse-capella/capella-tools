@@ -43,6 +43,7 @@ import org.polarsys.capella.common.ui.massactions.activator.MACapellaActivator;
 import org.polarsys.capella.common.ui.toolkit.browser.category.CategoryRegistry;
 import org.polarsys.capella.common.ui.toolkit.browser.category.ICategory;
 import org.polarsys.capella.core.model.handler.helpers.CapellaAdapterHelper;
+import org.polarsys.capella.groovy.api.ColumnFilter;
 import org.polarsys.kitalpha.massactions.core.table.IMATable;
 import org.polarsys.kitalpha.massactions.shared.view.MAView;
 
@@ -117,22 +118,6 @@ public class Api {
     job.schedule();
   
 
-  }
-  public static void createVisualizationTable(String name, Collection<EObject> selection, String ... ids) {
-
-    try {
-      IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(
-          MACapellaActivator.MV_VIEW_ID, MACapellaActivator.SEND_TO_MV_VIEW_COMMAND_PARAMETER_SECONDARY_ID,
-          IWorkbenchPage.VIEW_VISIBLE);
-
-      MAView maView = (MAView) viewPart;
-      maView.setViewName(name);
-      maView.dataChanged(selection);
-      maView.getTable().applyColumnFilter(new ColumnFilter(ids));
-
-    } catch (PartInitException e) {
-      e.printStackTrace();
-    }
   }
   
   public static Collection<CategoryEntry> getCategories(EClass clazz) {

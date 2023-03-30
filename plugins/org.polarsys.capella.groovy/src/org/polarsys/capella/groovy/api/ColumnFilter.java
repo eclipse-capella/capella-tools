@@ -1,4 +1,4 @@
-package org.polarsys.capella.groovy;
+package org.polarsys.capella.groovy.api;
 
 import java.util.Arrays;
 import java.util.Collection;
