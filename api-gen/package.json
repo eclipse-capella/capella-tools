@@ -1,0 +1,15 @@
+{
+  "name": "git-api",
+  "version": "1.0.0",
+  "description": "Git API generator",
+  "main": "function.js",
+  "scripts": {
+    "test": "npm test/test.js"
+  },
+  "author": "",
+  "private": true,
+  "license": "EPL-2.0",
+  "dependencies": {
+    "parse-diff": "^0.4.2"
+  }
+}
