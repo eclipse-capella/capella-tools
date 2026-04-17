@@ -173,8 +173,7 @@ var capellah = {
 		"http://www.polarsys.org/capella/core/la/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/LogicalArchitecture.ecore",	
 		"http://www.polarsys.org/capella/core/oa/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/OperationalAnalysis.ecore",	
 		"http://www.polarsys.org/capella/core/pa/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/PhysicalArchitecture.ecore",	
-		"http://www.polarsys.org/capella/core/requirement/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/Requirement.ecore",	
-		"http://www.polarsys.org/capella/core/sharedmodel/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/SharedModel.ecore",	
+		"http://www.polarsys.org/capella/core/sharedmodel/6.0.0": 		"/eclipse/capella/master/core/plugins/org.polarsys.capella.core.data.gen/model/SharedModel.ecore",
 		"http://www.polarsys.org/capella/common/re/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.re.gen/model/re.ecore",	
 		"http://www.polarsys.org/capella/common/libraries/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.libraries.gen/model/libraries.ecore",	
 		"http://www.polarsys.org/capella/common/activity/6.0.0": 		"/eclipse/capella/master/common/plugins/org.polarsys.capella.common.data.activity.gen/model/Activity.ecore",	
@@ -434,8 +433,9 @@ getAllPackages().then(pkgs => {
 		fileContent += getDoc(p);
 		fileContent += "\n";
 		fileContent += "\n";
-		
-		
+
+		//let json = "../../../capella.wiki/apidocs/m2/Metamodel-"+p._attributes.name + ".json";
+		//fsh.writeIfChange(json, JSON.stringify(p, null, " "));
 		p.eClassifiers.filter(c => !isDeprecatedClass(c)).forEach(c => {
 			
 			fileContent += "## "+getIconFromClass(c);
